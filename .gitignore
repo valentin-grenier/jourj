@@ -1,0 +1,65 @@
+# GLOBAL
+*~
+.svn
+.git
+/vendor
+composer.lock
+/cgi-bin/
+node_modules/
+package.lock.json
+
+# WORDPRESS
+wp-config.php
+public/wp-config.php
+bb-config.php
+default.gitignore
+wp-content/uploads
+wp-content/logs/system.log
+wp-content/advanced-cache.php
+wp-content/db-config.ini
+wp-content/db.php
+wp-content/index.php
+wp-content/object-cache.php
+wp-content/w3-total-cache-config.php
+wp-content/w3tc/
+wp-content/cache/
+wp-content/blogs.dir
+wp-content/gallery/
+wp-content/cache
+wp-content/wp-rocket-config
+wp-content/plugins/*
+wp-content/mu-plugins/*
+wp-content/updraft/*
+wp-content/themes/twenty*
+wp-admin
+wp-includes
+wp-content/languages
+wp-content/upgrade
+wp-content/upgrade-temp-backup
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-config-sample.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+license.txt
+index.php
+readme.html
+
+# PLUGINS
+!wp-content/plugins/.gitkeep
+
+# THEME
+!wp-content/themes/jourj-theme/
+!wp-content/themes/jourj-theme/index.php
+wp-content/themes/jourj-theme/vendor/
+
+# LOCAL BY FLYWHEEL
+local-xdebuginfo.php
