@@ -26,6 +26,6 @@ function jourj_block_editor_config()
     remove_theme_support("core-block-patterns");
 
     # Disable CSS for some blocks
-    # wp_dequeue_style("wp-block-columns");
+    wp_dequeue_style("wp-block-navigation");
 }
 add_action('after_setup_theme', 'jourj_block_editor_config');

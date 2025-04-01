@@ -195,7 +195,21 @@
 		}
 	},
 	"styles": {
-		"blocks": {},
+		"blocks": {
+			"core/navigation-link": {
+				"color": {
+					"text": "var:preset|color|primary"
+				},
+				"typography": {
+					"fontFamily": "var:preset|font-family|heading",
+					"fontWeight": "600",
+					"lineHeight": "normal",
+					"textTransform": "uppercase",
+					"fontSize": "1.5rem",
+					"letterSpacing": "0.025em"
+				}
+			}
+		},
 		"color": {
 			"text": "var:preset|color|primary",
 			"background": "var:preset|color|secondary-light"
