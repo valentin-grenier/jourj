@@ -1,0 +1,14 @@
+{
+	"name": "jourj-theme",
+	"version": "1.0.0",
+	"description": "Custom WordPress theme using Sass for styling.",
+	"author": "Valentin Grenier • Studio Val",
+	"license": "GPL-2.0-or-later",
+	"devDependencies": {
+		"node-sass": "^7.0.1"
+	},
+	"scripts": {
+		"dev": "sass --watch ./assets/css/scss/styles.scss:./assets/css/main.css ./assets/css/scss/utilities/_block-editor.scss:./assets/css/editor-styles.css",
+		"compile:css": "node-sass sass/ -o ./"
+	}
+}

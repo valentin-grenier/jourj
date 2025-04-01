@@ -1,0 +1,241 @@
+{
+	"customTemplates": [],
+	"settings": {
+		"appearanceTools": false,
+		"useRootPaddingAwareAlignments": true,
+		"color": {
+			"custom": false,
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"palette": [
+				{
+					"color": "#37515F",
+					"name": "Primary",
+					"slug": "primary"
+				},
+				{
+					"color": "#C5CED1",
+					"name": "Primary light",
+					"slug": "primary-light"
+				},
+				{
+					"color": "#8DB1AB",
+					"name": "Secondary",
+					"slug": "secondary"
+				},
+				{
+					"color": "#F4F8F7",
+					"name": "Secondary light",
+					"slug": "secondary-light"
+				},
+				{
+					"color": "#2B4141",
+					"name": "Tertiary",
+					"slug": "tertiary"
+				},
+				{
+					"color": "#EAECEC",
+					"name": "Tertiary light",
+					"slug": "tertiary-light"
+				},
+				{
+					"color": "#FFFFFF",
+					"name": "White",
+					"slug": "white"
+				}
+			]
+		},
+		"layout": {
+			"contentSize": "950px",
+			"wideSize": "1400px"
+		},
+		"spacing": {
+			"blockGap": true,
+			"customSpacingSize": false,
+			"defaultSpacingSizes": false,
+			"margin": false,
+			"padding": false,
+			"units": ["%", "px", "rem"],
+			"spacingSizes": [
+				{
+					"size": "0.875rem",
+					"name": "Extra small",
+					"slug": "xs"
+				},
+				{
+					"size": "1rem",
+					"name": "Small",
+					"slug": "sm"
+				},
+				{
+					"size": "1.125rem",
+					"name": "Base",
+					"slug": "bs"
+				},
+				{
+					"size": "1.5rem",
+					"name": "Medium",
+					"slug": "md"
+				},
+				{
+					"size": "2rem",
+					"name": "Large",
+					"slug": "lg"
+				},
+				{
+					"size": "3rem",
+					"name": "Extra large",
+					"slug": "xl"
+				}
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"defaultFontSizes": false,
+			"dropCap": false,
+			"fontStyle": true,
+			"fontWeight": true,
+			"letterSpacing": false,
+			"lineHeight": false,
+			"textAlign": true,
+			"textColumns": true,
+			"textDecoration": true,
+			"textTransform": true,
+			"writingMode": true,
+			"fontFamilies": [
+				{
+					"fontFamily": "Flatline, sans-serif",
+					"name": "Flatline",
+					"slug": "heading",
+					"fontFace": [
+						{
+							"fontFamily": "Flatline",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": ["file:./assets/fonts/Flatline-Regular.woff2"]
+						},
+						{
+							"fontFamily": "Flatline",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"src": ["file:./assets/fonts/Flatline-SemiBold.woff2"]
+						},
+						{
+							"fontFamily": "Flatline",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": ["file:./assets/fonts/Flatline-Bold.woff2"]
+						}
+					]
+				},
+				{
+					"fontFamily": "Open Sans, sans-serif",
+					"name": "Open Sans",
+					"slug": "body",
+					"fontFace": [
+						{
+							"fontFamily": "Open Sans",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": ["file:./assets/fonts/OpenSans-Regular.woff2"]
+						},
+						{
+							"fontFamily": "Open Sans",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"src": ["file:./assets/fonts/OpenSans-SemiBold.woff2"]
+						},
+						{
+							"fontFamily": "Open Sans",
+							"fontDisplay": "block",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": ["file:./assets/fonts/OpenSans-Bold.woff2"]
+						}
+					]
+				}
+			]
+		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"shadow": {
+			"defaultPresets": false,
+			"presets": []
+		},
+		"background": {
+			"backgroundImage": false,
+			"backgroundSize": false
+		},
+		"position": {
+			"sticky": true
+		},
+		"dimensions": {
+			"minHeight": true,
+			"defaultAspectRatios": true,
+			"aspectRatio": true,
+			"aspectRatios": []
+		}
+	},
+	"styles": {
+		"blocks": {},
+		"color": {
+			"text": "var:preset|color|primary",
+			"background": "var:preset|color|secondary-light"
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|heading",
+					"textTransform": "uppercase"
+				}
+			},
+			"button": {
+				"color": {
+					"background": "var:preset|color|primary",
+					"text": "var:preset|color|white"
+				},
+				"typography": {
+					"textTransform": "uppercase",
+					"fontWeight": "600",
+					"lineHeight": "normal"
+				},
+				"border": {
+					"radius": "0.5rem"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.75rem",
+						"bottom": "0.75rem",
+						"left": "1rem",
+						"right": "1rem"
+					}
+				}
+			}
+		},
+		"typography": {
+			"fontFamily": "var:preset|font-family|body",
+			"lineHeight": "2.25rem"
+		}
+	},
+	"templateParts": [],
+	"version": 3,
+	"$schema": "https://schemas.wp.org/trunk/theme.json"
+}
