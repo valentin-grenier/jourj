@@ -49,15 +49,15 @@
 			]
 		},
 		"layout": {
-			"contentSize": "950px",
-			"wideSize": "1400px"
+			"contentSize": "1100px",
+			"wideSize": "1500px"
 		},
 		"spacing": {
 			"blockGap": true,
-			"customSpacingSize": false,
+			"customSpacingSize": true,
 			"defaultSpacingSizes": false,
-			"margin": false,
-			"padding": false,
+			"margin": true,
+			"padding": true,
 			"units": ["%", "px", "rem"],
 			"spacingSizes": [
 				{
@@ -168,13 +168,45 @@
 						}
 					]
 				}
+			],
+			"fontSizes": [
+				{
+					"size": "0.875rem",
+					"name": "Extra small",
+					"slug": "xs"
+				},
+				{
+					"size": "1rem",
+					"name": "Small",
+					"slug": "sm"
+				},
+				{
+					"size": "1.125rem",
+					"name": "Base",
+					"slug": "bs"
+				},
+				{
+					"size": "1.5rem",
+					"name": "Medium",
+					"slug": "md"
+				},
+				{
+					"size": "2rem",
+					"name": "Large",
+					"slug": "lg"
+				},
+				{
+					"size": "3rem",
+					"name": "Extra large",
+					"slug": "xl"
+				}
 			]
 		},
 		"border": {
-			"color": false,
-			"radius": false,
-			"style": false,
-			"width": false
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
 		},
 		"shadow": {
 			"defaultPresets": false,
@@ -221,6 +253,11 @@
 					"textTransform": "uppercase"
 				}
 			},
+			"h1": {
+				"typography": {
+					"letterSpacing": "0.15em"
+				}
+			},
 			"button": {
 				"color": {
 					"background": "var:preset|color|primary",
@@ -242,6 +279,16 @@
 						"right": "1rem"
 					}
 				}
+			},
+			"link": {
+				"color": {
+					"text": "var:preset|color|secondary"
+				},
+				"typography": {
+					"fontWeight": "600",
+					"letterSpacing": "0.025em"
+				},
+				"css": "text-underline-offset: 4px;"
 			}
 		},
 		"typography": {

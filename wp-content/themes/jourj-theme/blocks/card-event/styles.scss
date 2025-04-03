@@ -1,0 +1,50 @@
+.jo-block-card-event {
+	position: relative;
+	margin-top: 0 !important;
+	padding-bottom: 2rem;
+
+	&:not(:last-child) {
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 1rem;
+			width: 4px;
+			height: 100%;
+			background: var(--wp--preset--color--secondary);
+			z-index: -1;
+			opacity: 0.25;
+		}
+	}
+
+	&__container {
+		background: var(--wp--preset--color--white);
+		padding: 1.5rem;
+		border-radius: 0.5rem;
+
+		h3 {
+			margin: 0 0 0.875rem;
+			line-height: normal;
+		}
+	}
+
+	&__item {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+
+		&:not(:last-child) {
+			margin-bottom: 0.75rem;
+		}
+
+		span,
+		a {
+			display: block;
+			line-height: normal;
+		}
+		a {
+			color: var(--wp--preset--color--primary);
+			text-underline-offset: 4px;
+		}
+	}
+}

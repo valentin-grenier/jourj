@@ -1,0 +1,19 @@
+{
+	"name": "jourj/card-event",
+	"title": "Card event",
+	"description": "A card to display infos about the event.",
+	"category": "layout",
+	"keywords": ["header", "navigation", "menu"],
+	"icon": "grid-view",
+	"style": ["file:./styles.css"],
+	"editorStyle": ["file:./editor.css"],
+	"script": ["file:./script.js"],
+	"viewScript": ["file:./script.js"],
+	"acf": {
+		"mode": "auto",
+		"renderTemplate": "template.php"
+	},
+	"supports": {
+		"jsx": true
+	}
+}

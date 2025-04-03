@@ -1,5 +1,1 @@
-.wp-block-heading strong {
-  color: var(--wp--preset--color--primary);
-}
-
-/*# sourceMappingURL=editor-styles.css.map */
+.wp-block-heading strong{color:var(--wp--preset--color--secondary);font-weight:700}/*# sourceMappingURL=editor-styles.css.map */
