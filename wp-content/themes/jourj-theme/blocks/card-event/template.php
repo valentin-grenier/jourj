@@ -1,7 +1,7 @@
 <?php
 # Icons
-$icon_calendar = file_get_contents(get_template_directory_uri() . '/assets/img/icon-calendar.svg');
-$icon_pin = file_get_contents(get_template_directory_uri() . '/assets/img/icon-pin.svg');
+$icon_calendar = file_get_contents(get_template_directory() . '/assets/img/icon-calendar.svg');
+$icon_pin = file_get_contents(get_template_directory() . '/assets/img/icon-pin.svg');
 
 # Block fields
 $title = get_field('jo_event_title') ?: "";
