@@ -1,16 +1,16 @@
 {
-	"name": "jourj/card-event",
-	"title": "Card event",
-	"description": "A card to display infos about the event.",
+	"name": "jourj/lodging-slider",
+	"title": "Lodging Slider",
+	"description": "A slider for lodging posts.",
 	"category": "layout",
-	"keywords": ["card", "event"],
+	"keywords": ["slider", "lodging"],
 	"icon": "grid-view",
 	"style": ["file:./styles.css"],
 	"editorStyle": ["file:./editor.css"],
 	"script": ["file:./script.js"],
 	"viewScript": ["file:./script.js"],
 	"acf": {
-		"mode": "auto",
+		"mode": "edit",
 		"renderTemplate": "template.php"
 	},
 	"supports": {

@@ -9,6 +9,10 @@ function jourj_theme_assets()
 
     # JS
     wp_enqueue_script('jourj-scripts-main', get_template_directory_uri() . '/assets/js/main.js', array(), '1.0.0', true);
+
+    # Dependencies
+    wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+    wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], null, true);
 }
 add_action('wp_enqueue_scripts', 'jourj_theme_assets');
 

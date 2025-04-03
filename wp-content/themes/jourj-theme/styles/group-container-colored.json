@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Container colored",
+	"slug": "group-container-colored",
+	"blockTypes": ["core/group"],
+	"styles": {
+		"spacing": {
+			"padding": {
+				"top": "2.5rem",
+				"bottom": "2.5rem",
+				"left": "3rem",
+				"right": "3rem"
+			},
+			"margin": {
+				"top": "2rem",
+				"bottom": "2rem"
+			}
+		},
+		"border": {
+			"radius": "1rem"
+		},
+		"shadow": "var:preset|shadow|large"
+	}
+}

@@ -1,5 +1,4 @@
 {
-	"customTemplates": [],
 	"settings": {
 		"appearanceTools": false,
 		"useRootPaddingAwareAlignments": true,
@@ -210,7 +209,18 @@
 		},
 		"shadow": {
 			"defaultPresets": false,
-			"presets": []
+			"presets": [
+				{
+					"name": "Large",
+					"slug": "lg",
+					"shadow": "0px 4px 24px -1px rgba(149, 157, 165, 0.09)"
+				},
+				{
+					"name": "Medium",
+					"slug": "md",
+					"shadow": "0px 0px 16px -1px rgba(149, 157, 165, 0.16)"
+				}
+			]
 		},
 		"background": {
 			"backgroundImage": false,
@@ -239,6 +249,16 @@
 					"textTransform": "uppercase",
 					"fontSize": "1.5rem",
 					"letterSpacing": "0.025em"
+				}
+			},
+			"core/list": {
+				"spacing": {
+					"padding": {
+						"left": "1.5rem"
+					},
+					"margin": {
+						"top": "0"
+					}
 				}
 			}
 		},
@@ -297,6 +317,13 @@
 		}
 	},
 	"templateParts": [],
+	"customTemplates": [
+		{
+			"name": "page-cms",
+			"title": "Page CMS",
+			"postTypes": ["page"]
+		}
+	],
 	"version": 3,
 	"$schema": "https://schemas.wp.org/trunk/theme.json"
 }

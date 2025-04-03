@@ -7,10 +7,17 @@ $icon_pin = file_get_contents(get_template_directory() . '/assets/img/icon-pin.s
 $title = get_field('jo_event_title') ?: "";
 $event_date = get_field('jo_event_date') ?: "";
 $event_location = get_field('jo_event_location') ?: null;
+$color = get_field('jo_event_color') ?: "";
+$direction = get_field('jo_event_direction') ?: "";
+
+# Class names
+$classes = "";
+$classes .= $color ? "color-{$color}" : "";
+$classes .= $direction ? " direction-{$direction}" : "";
 
 ?>
 
-<div class="jo-block-card-event">
+<div class="jo-block-card-event <?php echo esc_attr($classes); ?>">
     <div class="jo-block-card-event__container">
         <h3><?php echo esc_html($title); ?></h3>
 
