@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	burger.addEventListener('click', () => {
 		menu.classList.toggle('is-visible');
+		burger.classList.toggle('is-active');
 
 		document.documentElement.style.position = menu.classList.contains('is-visible') ? 'fixed' : 'static';
 
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				setTimeout(() => {
 					menu.classList.remove('is-visible');
+					burger.classList.remove('is-active');
 				}, 400);
 			});
 		});
