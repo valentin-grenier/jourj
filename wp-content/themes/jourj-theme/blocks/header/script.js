@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		menu.classList.toggle('is-visible');
 		burger.classList.toggle('is-active');
 
-		document.documentElement.style.position = menu.classList.contains('is-visible') ? 'fixed' : 'static';
+		document.documentElement.style.overflow = menu.classList.contains('is-visible') ? 'hidden' : 'auto';
 
 		// == For each link clicked, close the menu
 		const links = menu.querySelectorAll('a');
 
 		links.forEach((link) => {
 			link.addEventListener('click', () => {
-				document.documentElement.style.position = 'static';
+				document.documentElement.style.overflow = 'auto';
 
 				setTimeout(() => {
 					menu.classList.remove('is-visible');
