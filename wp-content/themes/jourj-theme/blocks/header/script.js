@@ -12,6 +12,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	burger.addEventListener('click', () => {
 		menu.classList.toggle('is-visible');
 
-		document.documentElement.style.overflowY = menu.classList.contains('is-visible') ? 'hidden' : 'auto';
+		document.documentElement.style.position = menu.classList.contains('is-visible') ? 'fixed' : 'static';
+
+		// == For each link clicked, close the menu
+		const links = menu.querySelectorAll('a');
+
+		links.forEach((link) => {
+			link.addEventListener('click', () => {
+				document.documentElement.style.position = 'static';
+
+				setTimeout(() => {
+					menu.classList.remove('is-visible');
+				}, 400);
+			});
+		});
 	});
 });
