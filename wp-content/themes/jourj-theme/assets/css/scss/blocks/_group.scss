@@ -1,0 +1,23 @@
+@media screen and (max-width: 1164px) {
+	main.wp-block-group {
+		padding: 0 !important;
+	}
+
+	.entry-content {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.wp-block-group {
+		&.is-style-group-container {
+			padding-top: 3rem;
+			padding-bottom: 3rem;
+		}
+
+		&.is-style-group-container-colored {
+			padding: 1.5rem;
+		}
+	}
+}

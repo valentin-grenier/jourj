@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Container sm",
+	"slug": "group-container-small",
+	"blockTypes": ["core/group"],
+	"styles": {
+		"spacing": {
+			"padding": {
+				"top": "1rem",
+				"bottom": "1rem"
+			}
+		}
+	}
+}

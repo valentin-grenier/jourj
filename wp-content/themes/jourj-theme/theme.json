@@ -278,6 +278,11 @@
 					"letterSpacing": "0.15em"
 				}
 			},
+			"h2": {
+				"typography": {
+					"fontSize": "1.75rem"
+				}
+			},
 			"button": {
 				"color": {
 					"background": "var:preset|color|primary",

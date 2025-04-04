@@ -3,3 +3,12 @@
 	margin: 0;
 	padding: 0;
 }
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 2rem;
+}
+
+.wp-site-blocks {
+	overflow-x: hidden;
+}

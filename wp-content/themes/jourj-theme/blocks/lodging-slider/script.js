@@ -1,7 +1,7 @@
 // simple swiper script
 document.addEventListener('DOMContentLoaded', () => {
 	const swiper = new Swiper('.jo-block-lodging-slider', {
-		slidesPerView: 2,
+		slidesPerView: 1,
 		spaceBetween: 32,
 		centeredSlides: false,
 		loop: false,
@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		pagination: {
 			el: '.swiper-pagination',
 			clickable: true,
+		},
+		breakpoints: {
+			768: {
+				slidesPerView: 2,
+				spaceBetween: 32,
+			},
 		},
 	});
 });

@@ -17,5 +17,14 @@ $allowed_blocks = array(
         <InnerBlocks
             allowedBlocks="<?php echo esc_attr(wp_json_encode($allowed_blocks)); ?>"
             className="jo-block-header__innerblocks" />
+
+        <button class="jo-block-header__burger">
+            <span>Menu</span>
+            <div class="jo-block-header__burger--icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
     </div>
 </div>
