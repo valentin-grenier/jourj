@@ -1,0 +1,12 @@
+{
+	"name": "jourj-gifts",
+	"version": "1.0.0",
+	"author": "Valentin Grenier • Studio Val",
+	"description": "A custom plugin for WordPress that provides a gift registry feature.",
+	"scripts": {
+		"dev": "sass --watch ./assets/css/scss/styles.scss:./assets/css/styles.css"
+	},
+	"devDependencies": {
+		"sass": "^1.68.0"
+	}
+}

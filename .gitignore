@@ -55,6 +55,7 @@ readme.html
 
 # PLUGINS
 !wp-content/plugins/.gitkeep
+!wp-content/plugins/jourj-gifts
 
 # THEME
 !wp-content/themes/jourj-theme/
