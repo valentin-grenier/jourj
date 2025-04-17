@@ -11,7 +11,7 @@
 	opacity: 0;
 	visibility: hidden;
 	z-index: -1;
-	transition: all 200ms;
+	transition: all 600ms;
 
 	&.active {
 		opacity: 1;
@@ -22,8 +22,8 @@
 	&__image {
 		border-radius: 0.5rem;
 		margin-bottom: 1rem;
-		width: 150px;
-		height: 150px;
+		width: 100px;
+		height: 100px;
 		object-fit: cover;
 	}
 
@@ -31,6 +31,8 @@
 		&--title {
 			text-transform: none;
 			letter-spacing: -1px;
+			font-size: 1.25rem;
+			line-height: normal;
 			font-family: var(--wp--preset--font-family--body);
 
 			span.gift-name {
@@ -56,15 +58,22 @@
 
 			button {
 				text-transform: none;
+				width: 100%;
+				background: var(--wp--preset--color--secondary-light);
+				color: var(--wp--preset--color--primary);
+				font-weight: 700;
+				text-wrap: nowrap;
+				cursor: pointer;
+				transition: all 150ms;
 
-				&.defined-amount {
-					background: var(--wp--preset--color--secondary-light);
-					color: var(--wp--preset--color--primary);
-					font-weight: 700;
+				&:hover {
+					transform: scale(0.95);
 				}
 
-				&.custom-amount {
-					text-wrap: nowrap;
+				&.active {
+					background: var(--wp--preset--color--primary);
+					color: var(--wp--preset--color--secondary-light);
+					font-weight: 700;
 				}
 			}
 		}
@@ -73,18 +82,40 @@
 			display: flex;
 			flex-direction: column;
 			gap: 0rem;
-			margin-bottom: 1rem;
+			height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transition: all 400ms;
+
+			&.active {
+				opacity: 1;
+			}
 		}
 	}
 
 	&__payment-infos {
 		display: flex;
 		flex-direction: column;
+		margin: 1rem 0;
+
+		&--title {
+			line-height: normal;
+			margin-bottom: 0.25rem;
+			font-weight: 700;
+
+			strong {
+				color: var(--wp--preset--color--secondary);
+			}
+		}
 
 		&--subtitle {
-			line-height: 1.5rem;
-			margin-bottom: 1rem;
+			line-height: 1.25rem;
+			font-size: 0.875rem;
 		}
+	}
+
+	label {
+		font-size: 0.875rem;
 	}
 
 	input:not([type='submit']),
@@ -141,19 +172,21 @@
 
 	&__overlay {
 		position: fixed;
-		top: 0;
-		left: 0;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, 0.5);
-		z-index: 9998;
 		opacity: 0;
 		visibility: hidden;
-		transition: all 200ms;
+		z-index: -10;
+		transition: all 600ms;
 
 		&.active {
 			opacity: 1;
 			visibility: visible;
+			z-index: 9998;
 		}
 	}
 }
