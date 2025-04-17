@@ -21,12 +21,10 @@ if (!defined('JOURJ_GIFTS_URL')) {
     define('JOURJ_GIFTS_URL', plugin_dir_url(__FILE__));
 }
 
-# Initialize the plugin classes
-require_once(JOURJ_GIFTS_DIR . 'includes/class-init.php');
-require_once(JOURJ_GIFTS_DIR . 'includes/class-post-types.php');
-require_once(JOURJ_GIFTS_DIR . 'includes/class-custom-fields.php');
-require_once(JOURJ_GIFTS_DIR . 'includes/class-shortcodes.php');
-require_once(JOURJ_GIFTS_DIR . 'includes/class-ajax.php');
+# Automatically require all PHP files in the includes directory
+foreach (glob(JOURJ_GIFTS_DIR . 'includes/*.php') as $file) {
+    require_once($file);
+}
 
 # Initialize the plugin
 function jourj_gifts_init()
@@ -36,6 +34,7 @@ function jourj_gifts_init()
     new JourJ_Custom_Fields();
     new JourJ_Shortcodes();
     new Jourj_Gift_Ajax();
+    new JourJ_IPN_Handler();
 }
 
 add_action('plugins_loaded', 'jourj_gifts_init');
