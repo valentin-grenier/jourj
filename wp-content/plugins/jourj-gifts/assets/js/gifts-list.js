@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	 */
 	function openGiftModal(gift) {
 		const modal = document.querySelector('.jo-block-gift-modal');
+		const overlay = document.querySelector('.jo-block-gift-modal__overlay');
 		if (!modal) return;
 
 		// == Fill modal elements
@@ -156,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 * Open the modal and its overlay
 		 */
 		modal.classList.add('active');
+		overlay.classList.add('active');
 
 		/**
 		 * Update the hidden input field when the custom amount input field changes
@@ -180,8 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	 */
 	function closeGiftModal() {
 		const modal = document.querySelector('.jo-block-gift-modal');
+		const overlay = document.querySelector('.jo-block-gift-modal__overlay');
 		if (!modal) return;
 
 		modal.classList.remove('active');
+		overlay.classList.remove('active');
 	}
 });
