@@ -6,6 +6,7 @@
  * This class initializes the plugin by loading the necessary classes and registering the custom post type and fields.
  */
 
+
 class JourJ_Init
 {
     public function __construct()
@@ -27,6 +28,7 @@ class JourJ_Init
         wp_localize_script('jourj-gifts-list', 'jourj_gift_ajax', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('jourj_gift_nonce'),
+            'paypal_email' => $_ENV['PAYPAL_EMAIL'] ?? null
         ));
     }
 }

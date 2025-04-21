@@ -26,6 +26,26 @@ foreach (glob(JOURJ_GIFTS_DIR . 'includes/*.php') as $file) {
     require_once($file);
 }
 
+# Load Dotenv if it exists
+$autoload_path = dirname(__DIR__, 3) . '/vendor/autoload.php';
+
+if (file_exists($autoload_path)) {
+    require_once($autoload_path);
+} else {
+    wp_die('Autoload file not found. Please run <code>composer install</code> to install dependencies.');
+}
+
+use Dotenv\Dotenv;
+
+$env_path = dirname(__DIR__, 3);
+
+if (file_exists($env_path . '/.env')) {
+    $dotenv = Dotenv::createImmutable($env_path);
+    $dotenv->safeLoad();
+} else {
+    error_log('[JourJ Gifts] .env file not found at ' . $env_path);
+}
+
 # Initialize the plugin
 function jourj_gifts_init()
 {

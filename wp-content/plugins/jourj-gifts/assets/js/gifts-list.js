@@ -175,6 +175,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		 */
 		const closeButton = modal.querySelector('.jo-block-gift-modal__close');
 		closeButton.addEventListener('click', closeGiftModal);
+
+		/**
+		 * Prevent form submission and redirect to PayPal
+		 */
+		const form = modal.querySelector('.jo-block-gift-modal__form');
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			const selectedAmount = form.querySelector('input[name="user-funding"]').value;
+			if (!selectedAmount) return;
+
+			redirectToPaypal({
+				giftId: gift.id,
+				giftTitle: gift.title,
+				amount: selectedAmount,
+			});
+		});
 	}
 
 	/**
@@ -187,5 +204,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		modal.classList.remove('active');
 		overlay.classList.remove('active');
+	}
+
+	/**
+	 * Redirect to PayPal
+	 */
+	function redirectToPaypal({ giftId, giftTitle, amount }) {
+		const params = new URLSearchParams({
+			cmd: '_xclick',
+			business: jourj_gift_ajax.paypal_email, // defined from PHP
+			item_number: giftId,
+			amount: amount,
+			currency_code: 'EUR',
+			return: `${window.location.origin}/merci?gift_id=${giftId}`,
+			notify_url: `${window.location.origin}/wp-json/jourj-gifts/v1/paypal-ipn`,
+		});
+
+		const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+
+		console.log(paypalUrl);
+		window.location.href = paypalUrl;
 	}
 });
