@@ -7,24 +7,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		const giftId = gift.dataset.giftId;
 
 		const buttons = gift.querySelectorAll('.jo-block-gifts-list__item--buttons button');
-
 		if (!buttons.length) return;
 
 		const participateButton = buttons[0];
 		const reserveButton = buttons[1];
 
-		participateButton.addEventListener('click', (event) => {
-			fetchGiftData(giftId);
+		participateButton.addEventListener('click', () => {
+			fetchGiftData(giftId, 'payment');
+		});
+
+		reserveButton.addEventListener('click', () => {
+			fetchGiftData(giftId, 'reservation');
 		});
 	});
 
 	/**
 	 * Fetch gift data from the server via AJAX
 	 */
-	function fetchGiftData(giftId) {
+	function fetchGiftData(giftId, modalType = 'payment') {
 		const formData = new FormData();
 		formData.append('action', 'jourj_get_gift_data');
 		formData.append('gift_id', giftId);
+		formData.append('mode', modalType);
 		formData.append('nonce', jourj_gift_ajax.nonce);
 
 		fetch(jourj_gift_ajax.ajax_url, {
@@ -35,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			.then((response) => response.json())
 			.then((json) => {
 				if (json.success) {
-					openGiftModal(json.data);
+					openGiftModal(json.data, modalType);
 				} else {
 					console.error(json.data || 'Gift not found');
 				}
@@ -47,162 +51,157 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	/**
 	 * Open the gift details modal
-	 *
 	 */
-	function openGiftModal(gift) {
-		const modal = document.querySelector('.jo-block-gift-modal');
+	function openGiftModal(gift, modalType = 'payment') {
+		const modal = document.querySelector(`.jo-block-gift-modal.${modalType}`);
 		const overlay = document.querySelector('.jo-block-gift-modal__overlay');
-		if (!modal) return;
+		if (!modal && !gift) return;
 
-		// == Fill modal elements
 		const titleEl = modal.querySelector('.gift-name');
 		const priceEl = modal.querySelector('.gift-price');
 		const imageEl = modal.querySelector('.gift-image');
 
 		if (titleEl) titleEl.textContent = gift.title;
 		if (priceEl) priceEl.textContent = `${gift.price}€`;
+
 		if (imageEl && gift.image) {
 			imageEl.setAttribute('src', gift.image);
 			imageEl.setAttribute('alt', gift.title);
 		}
 
-		/**
-		 * Compute amount buttons
-		 *
-		 * If gift price is greater than 1 000€, set 100€, 200€, 500€ and 750€ amounts
-		 * Else, set 25%, 50%, 75% and 100% of the gift price, rounded to 0 decimal
-		 */
-		const allButtons = modal.querySelectorAll('.jo-block-gift-modal__details--amounts button');
-		const amountButtons = modal.querySelectorAll('.jo-block-gift-modal__details--amounts button.defined-amount');
+		console.log(gift);
 
-		const giftPrice = gift.price;
-		const amounts = giftPrice > 1000 ? [100, 200, 500, 750] : [0.25, 0.5, 0.75, 1].map((percent) => Math.round(giftPrice * percent));
+		// === Payment Modal Logic ===
+		if (modalType === 'payment') {
+			const allButtons = modal.querySelectorAll('.jo-block-gift-modal__details--amounts button');
+			const amountButtons = modal.querySelectorAll('.jo-block-gift-modal__details--amounts button.defined-amount');
 
-		amountButtons.forEach((button, index) => {
-			// == Fill button elements depending on the gift price
-			let amount = amounts[index];
+			const giftPrice = gift.price;
+			const amounts = giftPrice > 1000 ? [100, 200, 500, 750] : [0.25, 0.5, 0.75, 1].map((percent) => Math.round(giftPrice * percent));
 
-			if (giftPrice <= 1000) {
-				amount = Math.round(amount / 5) * 5;
-			}
+			amountButtons.forEach((button, index) => {
+				let amount = amounts[index];
+				if (giftPrice <= 1000) amount = Math.round(amount / 5) * 5;
+				button.textContent = `${amount}€`;
+				button.dataset.amount = amount;
 
-			button.textContent = `${amount}€`;
-			button.dataset.amount = amount;
+				button.addEventListener('click', () => {
+					allButtons.forEach((btn) => btn.classList.remove('active'));
+					button.classList.add('active');
+					const selectedAmountInput = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
+					selectedAmountInput.value = button.dataset.amount;
 
-			// == Add event listener to each button
-			button.addEventListener('click', () => {
-				// == Remove active class from all buttons
-				allButtons.forEach((btn) => {
-					btn.classList.remove('active');
-				});
-
-				// == Add active class to the clicked button
-				button.classList.add('active');
-
-				// == Set the selected amount in the hidden input field
-				const selectedAmountInput = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
-				selectedAmountInput.value = button.dataset.amount;
-
-				// == Hide the custom amount input field if defined-amount button is clicked
-				const customAmountInput = modal.querySelector('.jo-block-gift-modal__details--custom-amount');
-
-				if (customAmountInput.classList.contains('active')) {
-					customAmountInput.classList.remove('active');
+					const customAmountInput = modal.querySelector('.jo-block-gift-modal__details--custom-amount');
+					if (customAmountInput.classList.contains('active')) {
+						customAmountInput.classList.remove('active');
+						customAmountInput.style.height = '0px';
+						customAmountButton.classList.remove('active');
+					}
+					customAmountInput.value = '';
 					customAmountInput.style.height = '0px';
+				});
+			});
+
+			const customAmountButton = modal.querySelector('.jo-block-gift-modal__details--amounts button.custom-amount');
+			const customAmount = modal.querySelector('.jo-block-gift-modal__details--custom-amount');
+			const customAmountInput = modal.querySelector('.jo-block-gift-modal__details--custom-amount input[name="custom-amount"]');
+
+			customAmountButton.addEventListener('click', () => {
+				customAmountButton.classList.toggle('active');
+
+				if (customAmountButton.classList.contains('active')) {
+					customAmount.classList.add('active');
+					const customAmountHeight = customAmount.scrollHeight;
+					customAmount.style.height = `${customAmountHeight}px`;
+
+					amountButtons.forEach((btn) => btn.classList.remove('active'));
+				} else {
+					customAmount.classList.remove('active');
+					customAmount.style.height = '0px';
 					customAmountButton.classList.remove('active');
 				}
-				customAmountInput.value = '';
-				customAmountInput.style.height = '0px';
+
+				const hiddenFieldAmount = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
+				const customAmountValue = parseFloat(customAmountInput.value);
+				hiddenFieldAmount.value = !isNaN(customAmountValue) ? customAmountValue : 0;
 			});
-		});
 
-		/**
-		 * If custom amount button is clicked, show a custom input field, else hide it
-		 */
-		const customAmountButton = document.querySelector('.jo-block-gift-modal__details--amounts button.custom-amount');
-		const customAmount = document.querySelector('.jo-block-gift-modal__details--custom-amount');
-		const customAmountInput = document.querySelector('.jo-block-gift-modal__details--custom-amount input[name="custom-amount"]');
+			customAmountInput.addEventListener('input', () => {
+				const numericValue = parseFloat(customAmountInput.value);
+				const hiddenFieldAmount = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
+				hiddenFieldAmount.value = numericValue;
+			});
 
-		customAmountButton.addEventListener('click', () => {
-			// == Toggle active class on the custom amount button and input field
-			customAmountButton.classList.toggle('active');
+			const form = modal.querySelector('.jo-block-gift-modal__form');
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				const selectedAmount = form.querySelector('input[name="user-funding"]').value;
+				if (!selectedAmount) return;
 
-			if (customAmountButton.classList.contains('active')) {
-				customAmount.classList.add('active');
-				const customAmountHeight = customAmount.scrollHeight;
-				customAmount.style.height = `${customAmountHeight}px`;
-
-				// == Remove active class from all other buttons
-				amountButtons.forEach((btn) => {
-					btn.classList.remove('active');
+				redirectToPaypal({
+					giftId: gift.id,
+					giftTitle: gift.title,
+					amount: selectedAmount,
 				});
-			} else {
-				customAmount.classList.remove('active');
-				customAmount.style.height = '0px';
-				customAmountButton.classList.remove('active');
-			}
+			});
+		}
 
-			// == Get the existing value of the custom amount input field and set it to the hidden input field
-			const hiddenFieldAmount = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
-			const customAmountValue = parseFloat(customAmountInput.value);
+		// === Reservation Modal Logic ===
+		if (modalType === 'reservation') {
+			const reserveForm = modal.querySelector('.jo-block-gift-modal.reservation form');
+			const reservedByInput = modal.querySelector('.jo-block-gift-modal__form input[name="user-email"]');
 
-			if (!isNaN(customAmountValue)) {
-				hiddenFieldAmount.value = customAmountValue;
-			} else {
-				hiddenFieldAmount.value = 0;
-			}
-		});
+			reserveForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+
+				const reservedBy = reservedByInput.value.trim();
+
+				const formData = new FormData();
+				formData.append('action', 'jourj_reserve_gift');
+				formData.append('gift_id', gift.id);
+				formData.append('reserved_by', reservedBy);
+				formData.append('message', gift.message);
+				formData.append('mode', modalType);
+				formData.append('nonce', jourj_gift_ajax.nonce);
+
+				fetch(jourj_gift_ajax.ajax_url, {
+					method: 'POST',
+					body: formData,
+					credentials: 'same-origin',
+				})
+					.then((res) => res.json())
+					.then((json) => {
+						if (json.success) {
+							alert('Réservation réussie !');
+						} else {
+							console.error(json.data || 'Erreur lors de la réservation.');
+						}
+					})
+					.catch(() => {
+						alert('Une erreur est survenue.');
+					});
+			});
+		}
 
 		/**
-		 * Open the modal and its overlay
+		 * Show the modal
 		 */
 		modal.classList.add('active');
 		overlay.classList.add('active');
 
-		/**
-		 * Update the hidden input field when the custom amount input field changes
-		 */
-
-		customAmountInput.addEventListener('input', () => {
-			const numericValue = parseFloat(customAmountInput.value);
-
-			const hiddenFieldAmount = modal.querySelector('.jo-block-gift-modal__form input[name="user-funding"]');
-			hiddenFieldAmount.value = numericValue;
-		});
-
-		/**
-		 * Close the modal when clicking on close button or on overlay
-		 */
 		const closeButton = modal.querySelector('.jo-block-gift-modal__close');
 		closeButton.addEventListener('click', closeGiftModal);
-
-		/**
-		 * Prevent form submission and redirect to PayPal
-		 */
-		const form = modal.querySelector('.jo-block-gift-modal__form');
-		form.addEventListener('submit', (event) => {
-			event.preventDefault();
-
-			const selectedAmount = form.querySelector('input[name="user-funding"]').value;
-			if (!selectedAmount) return;
-
-			redirectToPaypal({
-				giftId: gift.id,
-				giftTitle: gift.title,
-				amount: selectedAmount,
-			});
-		});
+		overlay.addEventListener('click', closeGiftModal);
 	}
 
 	/**
 	 * Close the modal
 	 */
 	function closeGiftModal() {
-		const modal = document.querySelector('.jo-block-gift-modal');
+		const modals = document.querySelectorAll('.jo-block-gift-modal');
 		const overlay = document.querySelector('.jo-block-gift-modal__overlay');
-		if (!modal) return;
 
-		modal.classList.remove('active');
+		modals.forEach((modal) => modal.classList.remove('active'));
 		overlay.classList.remove('active');
 	}
 
@@ -217,12 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			item_name: `Participation pour ${giftTitle}`,
 			amount: amount,
 			currency_code: 'EUR',
-			return: `${window.location.origin}`,
+			return: `${window.location.origin}/merci?gift_id=${giftId}`,
 			notify_url: `${window.location.origin}/wp-json/jourj-gifts/v1/paypal-ipn`,
 		});
 
 		const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
-
 		window.location.href = paypalUrl;
 	}
 });

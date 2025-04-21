@@ -59,7 +59,6 @@
             name="jourj_reserved"
             id="jourj_reserved"
             value="1"
-            disabled
             <?php checked($reserved, 1); ?>>
         <label for="jourj_reserved"><?php esc_html_e('Reserved?', 'jourj'); ?></label>
     </p>
@@ -89,5 +88,16 @@
             disabled>
     </p>
 
+    <!-- Cancellation Link -->
+    <p>
+        <label for="jourj_cancellation_link"><?php esc_html_e('Cancellation Link:', 'jourj'); ?></label><br>
+        <input
+            type="text"
+            name="jourj_cancellation_link"
+            id="jourj_cancellation_link"
+            value="<?php echo esc_attr(get_post_meta($post->ID, '_jourj_cancellation_link', true)); ?>"
+            style="width: 100%; max-width: 300px;"
+            disabled>
+    </p>
 
 </div>

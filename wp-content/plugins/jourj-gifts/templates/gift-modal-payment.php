@@ -1,13 +1,8 @@
 <?php
 $icon_cross = JOURJ_GIFTS_URL . 'assets/img/icon-cross.svg';
-
-# Add the overlay in the footer with a filter
-add_filter('wp_footer', function () {
-    echo '<div class="jo-block-gift-modal__overlay"></div>';
-}, 100);
 ?>
 
-<div class="jo-block-gift-modal">
+<div class="jo-block-gift-modal payment">
     <div class="jo-block-gift-modal__container">
         <img class="jo-block-gift-modal__image gift-image" src="" alt="" />
 

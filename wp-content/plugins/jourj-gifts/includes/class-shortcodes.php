@@ -12,14 +12,16 @@ class JourJ_Shortcodes
     {
         add_shortcode('jourj_gifts_list', [$this, 'render_gift_list']);
         add_shortcode('jourj_gifts_featured', [$this, 'render_gift_featured']);
+        add_action('wp_footer', [$this, 'render_overlay'], 100);
     }
 
     # Render the gift list shortcode and the modal
-    public function render_gift_list($atts)
+    public function render_gift_list()
     {
         ob_start();
         include(JOURJ_GIFTS_DIR . 'templates/gifts-list.php');
-        include(JOURJ_GIFTS_DIR . 'templates/gift-modal.php');
+        include(JOURJ_GIFTS_DIR . 'templates/gift-modal-payment.php');
+        include(JOURJ_GIFTS_DIR . 'templates/gift-modal-reservation.php');
         return ob_get_clean();
     }
 
@@ -29,5 +31,11 @@ class JourJ_Shortcodes
         ob_start();
         include(JOURJ_GIFTS_DIR . 'templates/gifts-featured.php');
         return ob_get_clean();
+    }
+
+    # Render overlay in the footer
+    public function render_overlay()
+    {
+        echo '<div class="jo-block-gift-modal__overlay"></div>';
     }
 }
