@@ -4,7 +4,7 @@
 	"author": "Valentin Grenier • Studio Val",
 	"description": "A custom plugin for WordPress that provides a gift registry feature.",
 	"scripts": {
-		"dev": "sass --watch ./assets/css/scss/styles.scss:./assets/css/styles.css --verbose"
+		"dev": "sass --no-source-map --watch ./assets/css/scss/front-end/front-end.scss:./assets/css/front-end.css ./assets/css/scss/admin/admin.scss:./assets/css/admin.css"
 	},
 	"devDependencies": {
 		"sass": "^1.68.0"
