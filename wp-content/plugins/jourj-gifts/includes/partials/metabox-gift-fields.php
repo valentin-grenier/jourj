@@ -22,7 +22,8 @@
             name="jourj_total_amount"
             id="jourj_total_amount"
             value="<?php echo esc_attr($total_amount); ?>"
-            style="width: 100%; max-width: 300px;">
+            style="width: 100%; max-width: 300px;"
+            required>
     </p>
 
     <!-- Custom Message -->
