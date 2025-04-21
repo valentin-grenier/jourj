@@ -17,9 +17,11 @@ $icon_cross = JOURJ_GIFTS_URL . 'assets/img/icon-cross.svg';
                 <span class="gift-price"></span>
             </div>
 
-            <p>
-                <?php _e('Vous pouvez annuler la réservation à tout moment en cliquant sur le lien que vous recevrez par email.', 'jourj-gifts'); ?>
-            </p>
+            <div class="jo-block-gift-modal__payment-infos">
+                <p class="jo-block-gift-modal__payment-infos--subtitle">
+                    <?php _e('Vous pourrez annuler la réservation à tout moment via le lien reçu par email. La réservation bloque le cadeau pour les autres invités.', 'jourj-gifts'); ?>
+                </p>
+            </div>
         </div>
 
         <form class="jo-block-gift-modal__form">
@@ -29,8 +31,8 @@ $icon_cross = JOURJ_GIFTS_URL . 'assets/img/icon-cross.svg';
             <label for="user-email"><?php _e('Votre adresse email', 'jourj-gifts'); ?> :</label>
             <input type="email" name="user-email" id="user-email" placeholder="<?php _e('ex : john@doe.com', 'jourj-gifts'); ?>" required />
 
-            <label for="user-message"><?php _e('Vous pouvez laisser un petit message avec votre réservation (facultatif)', 'jourj-gifts'); ?> :</label>
-            <textarea name="user-message" id="user-message" placeholder="<?php _e('ex : Écrivez ici votre message ...', 'jourj-gifts'); ?>" rows="4"></textarea>
+            <label for="guest_message"><?php _e('Vous pouvez laisser un petit message avec votre réservation (facultatif)', 'jourj-gifts'); ?> :</label>
+            <textarea name="guest_message" id="guest_message" placeholder="<?php _e('ex : Écrivez ici votre message ...', 'jourj-gifts'); ?>" rows="4"></textarea>
 
             <input type="hidden" name="gift-id" id="gift-id" value="" />
 

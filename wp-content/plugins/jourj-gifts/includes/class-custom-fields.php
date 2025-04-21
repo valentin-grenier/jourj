@@ -10,55 +10,70 @@ class JourJ_Custom_Fields
 {
     public function __construct()
     {
-        # Register the meta box
-        add_action('add_meta_boxes', [$this, 'add_custom_fields_box']);
+        # Register meta boxes
+        add_action('add_meta_boxes', [$this, 'gift_custom_fields']);
+        add_action('add_meta_boxes', [$this, 'guests_messages']);
 
         # Save meta box data
-        add_action('save_post_jourj_gift', [$this, 'save_custom_fields']);
+        add_action('save_post_jourj_gift', [$this, 'save_gift_custom_fields']);
     }
 
     # Create the meta box
-    public function add_custom_fields_box()
+    public function gift_custom_fields()
     {
         add_meta_box(
             'jourj_gift_details',                           # Unique ID for the meta box
             __('Gift Details', 'jourj-gifts'),              # Box title 
-            array($this, 'render_custom_fields_box'),       # Content callback
+            array($this, 'render_gift_custom_fields_box'),       # Content callback
             'jourj_gift',                                   # Post type
             'normal',                                       # Context (normal, side, advanced)
             'high'                                          # Priority (high, default, low)
         );
     }
 
+    public function guests_messages()
+    {
+        add_meta_box(
+            'jourj_guest_messages',                         # Unique ID for the meta box
+            __('Guest Messages', 'jourj-gifts'),            # Box title 
+            array($this, 'render_guest_messages_box'),      # Content callback
+            'jourj_gift',                                   # Post type
+            'normal',                                       # Context (normal, side, advanced)
+            'default'                                       # Priority (high, default, low)
+        );
+    }
+
     # Render the meta box fields
-    public function render_custom_fields_box($post)
+    public function render_gift_custom_fields_box($post)
     {
         # Security nonce
         wp_nonce_field('jourj_gift_nonce', 'jourj_gift_nonce_field');
 
         # Get current meta values
-        $total_amount   = get_post_meta($post->ID, '_jourj_total_amount', true);
-        $custom_message = get_post_meta($post->ID, '_jourj_custom_message', true);
-        $reserved       = get_post_meta($post->ID, '_jourj_reserved', true);
-        $funded         = get_post_meta($post->ID, '_jourj_funded', true);
-        $reserved_by    = get_post_meta($post->ID, '_jourj_reserved_by', true);
-        $is_featured    = get_post_meta($post->ID, '_jourj_is_featured', true);
+        $total_amount = get_post_meta($post->ID, '_jourj_total_amount', true);
+        $gift_description = get_post_meta($post->ID, '_jourj_gift_description', true);
+        $reserved = get_post_meta($post->ID, '_jourj_reserved', true);
+        $funded = get_post_meta($post->ID, '_jourj_funded', true);
+        $reserved_by_name = get_post_meta($post->ID, '_jourj_reserved_by_name', true);
+        $reserved_by_email = get_post_meta($post->ID, '_jourj_reserved_by_email', true);
+        $is_featured = get_post_meta($post->ID, '_jourj_is_featured', true);
         $cancellation_link = get_post_meta($post->ID, '_jourj_cancellation_link', true);
 
         # Default or cast
-        $total_amount   = $total_amount ?: '';
-        $custom_message = $custom_message ?: '';
-        $reserved       = (int) $reserved;
-        $funded         = (float) $funded;
-        $reserved_by    = $reserved_by ?: '';
-        $is_featured    = (int) $is_featured;
+        $total_amount = $total_amount ?: '';
+        $gift_description = $gift_description ?: '';
+        $reserved = (int) $reserved;
+        $funded = (float) $funded;
+        $reserved_by_name = $reserved_by_name ?: '';
+        $reserved_by_email = $reserved_by_email ?: '';
+        $is_featured = (int) $is_featured;
         $cancellation_link = $cancellation_link ?: '';
 
         require plugin_dir_path(__FILE__) . 'partials/metabox-gift-fields.php';
     }
 
     # Save the meta box data
-    public function save_custom_fields($post_id)
+    public function save_gift_custom_fields($post_id)
     {
         # Check for nonce
         if (
@@ -83,10 +98,11 @@ class JourJ_Custom_Fields
         # Sanitize and save the fields
         $fields = [
             '_jourj_total_amount' => filter_input(INPUT_POST, 'jourj_total_amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-            '_jourj_custom_message' => sanitize_textarea_field($_POST['jourj_custom_message'] ?? ''),
+            '_jourj_gift_description' => sanitize_textarea_field($_POST['jourj_gift_description'] ?? ''),
             '_jourj_reserved' => !empty($_POST['jourj_reserved']) ? 1 : 0,
             '_jourj_funded' => filter_input(INPUT_POST, 'jourj_funded', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-            '_jourj_reserved_by' => sanitize_email($_POST['jourj_reserved_by'] ?? ''),
+            '_jourj_reserved_by_name' => sanitize_text_field($_POST['jourj_reserved_by_name'] ?? ''),
+            '_jourj_reserved_by_email' => sanitize_email($_POST['jourj_reserved_by_email'] ?? ''),
             '_jourj_is_featured' => !empty($_POST['jourj_is_featured']) ? 1 : 0,
             '_jourj_cancellation_link' => sanitize_url($_POST['jourj_cancellation_link'] ?? ''),
         ];
@@ -94,5 +110,18 @@ class JourJ_Custom_Fields
         foreach ($fields as $meta_key => $value) {
             update_post_meta($post_id, $meta_key, $value);
         }
+    }
+
+    # Render the guest messages box
+    public function render_guest_messages_box($post)
+    {
+        # Security nonce
+        wp_nonce_field('jourj_guest_messages_nonce', 'jourj_guest_messages_nonce_field');
+
+        # Get current meta values
+        $guest_messages = get_post_meta($post->ID, '_jourj_guest_messages', true);
+        $guest_messages = $guest_messages ?: [];
+
+        require plugin_dir_path(__FILE__) . 'partials/metabox-guests-messages.php';
     }
 }

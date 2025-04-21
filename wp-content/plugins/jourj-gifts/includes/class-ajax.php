@@ -63,12 +63,13 @@ class Jourj_Gift_Ajax
 
         # Fill the data array with the necessary information based on the mode
         if ($mode === 'payment') {
-            $data['price']  = (float) get_post_meta($gift_post->ID, '_jourj_total_amount', true);
+            $data['price'] = (float) get_post_meta($gift_post->ID, '_jourj_total_amount', true);
             $data['funded'] = (float) get_post_meta($gift_post->ID, '_jourj_funded', true);
         } elseif ($mode === 'reservation') {
-            $data['price']     = (float) get_post_meta($gift_post->ID, '_jourj_total_amount', true);
-            $data['reserved']    = (bool) get_post_meta($gift_post->ID, '_jourj_reserved', true);
-            $data['reserved_by'] = sanitize_text_field(get_post_meta($gift_post->ID, '_jourj_reserved_by', true));
+            $data['price'] = (float) get_post_meta($gift_post->ID, '_jourj_total_amount', true);
+            $data['reserved'] = (bool) get_post_meta($gift_post->ID, '_jourj_reserved', true);
+            $data['reserved_by_name'] = sanitize_text_field(get_post_meta($gift_post->ID, '_jourj_reserved_by_name', true));
+            $data['reserved_by_email'] = sanitize_email(get_post_meta($gift_post->ID, '_jourj_reserved_by_email', true));
         }
 
         return $data;
@@ -84,8 +85,11 @@ class Jourj_Gift_Ajax
 
         # Check the provided gift id
         $gift_id = isset($_POST['gift_id']) ? strval($_POST['gift_id']) : 0;
-        $reserved_by = sanitize_text_field($_POST['reserved_by'] ?? '');
+        $reserved_by_name = sanitize_text_field($_POST['reserved_by_name'] ?? '');
+        $reserved_by_email = sanitize_text_field($_POST['reserved_by_email'] ?? '');
+        $guest_message = sanitize_textarea_field($_POST['guest_message'] ?? '');
 
+        # Check if the gift ID is valid and if the post type is correct
         if (! $gift_id || get_post_type($gift_id) !== 'jourj_gift') {
             wp_send_json_error(__('Invalid gift ID.', 'jourj-gifts'), 400);
         }
@@ -96,27 +100,36 @@ class Jourj_Gift_Ajax
         }
 
         # Else, update the gift post meta to reserve it and send a success response
-        update_post_meta($gift_id, '_jourj_reserved', 1);
-        update_post_meta($gift_id, '_jourj_reserved_by', $reserved_by);
+        //update_post_meta($gift_id, '_jourj_reserved', 1);
+        update_post_meta($gift_id, '_jourj_reserved_by_name', $reserved_by_name);
+        update_post_meta($gift_id, '_jourj_reserved_by_email', $reserved_by_email);
+
+        # Save guest message if provided
+        if (!empty($guest_message)) {
+            $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
+
+            $messages[] = [
+                'name'    => $reserved_by_name,
+                'email'   => $reserved_by_email,
+                'message' => $guest_message,
+                'date'    => current_time('mysql'),
+            ];
+
+            error_log(print_r($messages, true)); // Debugging line
+            update_post_meta($gift_id, '_jourj_guest_messages', $messages);
+        }
 
         # Generate a token for cancellation link and store it in the post meta
-        $token = bin2hex(random_bytes(16));
-        $cancellation_link = add_query_arg(
-            [
-                'action' => 'jourj_cancel_gift',
-                'token'  => $token,
-                'gift_id' => $gift_id,
-            ],
-            home_url('/')
-        );
+        $cancellation_link = $this->create_cancellation_link($gift_id);
 
         update_post_meta($gift_id, '_jourj_cancellation_link', $cancellation_link);
 
         # Send the cancellation email to the user
-        $user_email = sanitize_email($_POST['reserved_by']) ?? '';
+        $user_email = sanitize_email($_POST['reserved_by_email']) ?? '';
 
         if (!empty($user_email)) {
-            $this->send_cancellation_email($gift_id, $user_email);
+            $this->send_reservation_confirmation_email($gift_id, $user_email, "guest");
+            $this->send_reservation_confirmation_email($gift_id, $user_email, "admin");
         }
 
         # Send the success response
@@ -124,18 +137,50 @@ class Jourj_Gift_Ajax
     }
 
     # Send an email to the user with the cancellation link
-    public function send_cancellation_email($gift_id, $user_email)
+    public function send_reservation_confirmation_email($gift_id, $user_email, $receiver = "admin")
     {
+        # Send the confirmation email to the admin or the user
+        if ($receiver === "admin") {
+            $user_email = $_ENV['PAYPAL_EMAIL'] ?? get_option('admin_email');
+        }
+
+        error_log("Sending email to: $user_email"); // Debugging line
+
         # Create the email content
-        $subject = __('Confirmation de réservation - Mariage Rébecca et Aurélien', 'jourj-gifts');
+        if ($receiver === "admin") {
+            $subject = __('Nouvelle réservation de cadeau - Site web', 'jourj-gifts');
+        } else {
+            $subject = __('Confirmation de réservation - Cadeau Rébecca et Aurélien', 'jourj-gifts');
+        }
+
 
         ob_start();
-        include plugin_dir_path(__FILE__) . './partials/email-template.php';
+        if ($receiver === "admin") {
+            include plugin_dir_path(__FILE__) . './partials/email-reservation-admin.php';
+        } else {
+            include plugin_dir_path(__FILE__) . './partials/email-reservation-guest.php';
+        }
+
         $message = ob_get_clean();
 
         # Set the email headers to send HTML email
         $headers = ['Content-Type: text/html; charset=UTF-8'];
 
         wp_mail($user_email, $subject, $message, $headers);
+    }
+
+    # Create cancellation link for the gift
+    private function create_cancellation_link($gift_id)
+    {
+        $token = bin2hex(random_bytes(16));
+
+        return add_query_arg(
+            [
+                'action' => 'jourj_cancel_gift',
+                'token'  => $token,
+                'gift_id' => $gift_id,
+            ],
+            home_url('/')
+        );
     }
 }

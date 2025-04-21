@@ -4,7 +4,7 @@
  * Partial: Metabox Fields for the "Gift Details"
  * Variables provided by the parent file (render_custom_fields_box()):
  *  - $total_amount
- *  - $custom_message
+ *  - $gift_description
  *  - $reserved
  *  - $funded
  *  - $reserved_by
@@ -15,7 +15,7 @@
 <div class="jourj-gifts-fields">
     <!-- Total Amount -->
     <p>
-        <label for="jourj_total_amount"><?php esc_html_e('Total Amount:', 'jourj'); ?></label><br>
+        <label for="jourj_total_amount"><?php esc_html_e('Total Amount (€):', 'jourj'); ?></label><br>
         <input
             type="number"
             step="0.01"
@@ -28,12 +28,12 @@
 
     <!-- Custom Message -->
     <p>
-        <label for="jourj_custom_message"><?php esc_html_e('Custom Message:', 'jourj'); ?></label><br>
+        <label for="jourj_gift_description"><?php esc_html_e('Gift description:', 'jourj'); ?></label><br>
         <textarea
-            name="jourj_custom_message"
-            id="jourj_custom_message"
+            name="jourj_gift_description"
+            id="jourj_gift_description"
             rows="3"
-            style="width: 100%; max-width: 500px;"><?php echo esc_textarea($custom_message); ?></textarea>
+            style="width: 100%; max-width: 500px;"><?php echo esc_textarea($gift_description); ?></textarea>
     </p>
 
     <!-- is_featured (checkbox) -->
@@ -52,17 +52,6 @@
     <!-- Separator -->
     <hr>
 
-    <!-- Reserved (checkbox) -->
-    <p>
-        <input
-            type="checkbox"
-            name="jourj_reserved"
-            id="jourj_reserved"
-            value="1"
-            <?php checked($reserved, 1); ?>>
-        <label for="jourj_reserved"><?php esc_html_e('Reserved?', 'jourj'); ?></label>
-    </p>
-
     <!-- Already Funded -->
     <p>
         <label for="jourj_funded"><?php esc_html_e('Already Funded Amount:', 'jourj'); ?></label><br>
@@ -76,14 +65,40 @@
             style="width: 100%; max-width: 300px;">
     </p>
 
-    <!-- Reserved By Email -->
+    <!-- Separator -->
+    <hr>
+
+    <!-- Reserved (checkbox) -->
     <p>
-        <label for="jourj_reserved_by"><?php esc_html_e('Reserved By (Email):', 'jourj'); ?></label><br>
+        <input
+            type="checkbox"
+            name="jourj_reserved"
+            id="jourj_reserved"
+            value="1"
+            <?php checked($reserved, 1); ?>>
+        <label for="jourj_reserved"><?php esc_html_e('Reserved?', 'jourj'); ?></label>
+    </p>
+
+    <!-- Reserved By Name -->
+    <p>
+        <label for="jourj_reserved_by_name"><?php esc_html_e('Guest name:', 'jourj'); ?></label><br>
         <input
             type="email"
-            name="jourj_reserved_by"
-            id="jourj_reserved_by"
-            value="<?php echo esc_attr($reserved_by); ?>"
+            name="jourj_reserved_by_name"
+            id="jourj_reserved_by_name"
+            value="<?php echo esc_attr($reserved_by_name); ?>"
+            style="width: 100%; max-width: 300px;"
+            disabled>
+    </p>
+
+    <!-- Reserved By Email -->
+    <p>
+        <label for="jourj_reserved_by_email"><?php esc_html_e('Guest email:', 'jourj'); ?></label><br>
+        <input
+            type="email"
+            name="jourj_reserved_by_email"
+            id="jourj_reserved_by_email"
+            value="<?php echo esc_attr($reserved_by_email); ?>"
             style="width: 100%; max-width: 300px;"
             disabled>
     </p>

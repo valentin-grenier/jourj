@@ -69,8 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			imageEl.setAttribute('alt', gift.title);
 		}
 
-		console.log(gift);
-
 		// === Payment Modal Logic ===
 		if (modalType === 'payment') {
 			const allButtons = modal.querySelectorAll('.jo-block-gift-modal__details--amounts button');
@@ -79,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const giftPrice = gift.price;
 			const amounts = giftPrice > 1000 ? [100, 200, 500, 750] : [0.25, 0.5, 0.75, 1].map((percent) => Math.round(giftPrice * percent));
 
+			// == Fill amount buttons with values depending on the price
 			amountButtons.forEach((button, index) => {
 				let amount = amounts[index];
 				if (giftPrice <= 1000) amount = Math.round(amount / 5) * 5;
@@ -132,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				hiddenFieldAmount.value = numericValue;
 			});
 
+			// == Get guest message value and trim it
+			let guestMessage = modal.querySelector('.jo-block-gift-modal__form textarea[name="guest_message"]');
+			guestMessage = guestMessage.value.trim();
+
+			// == Build PayPal URL redirect
 			const form = modal.querySelector('.jo-block-gift-modal__form');
 			form.addEventListener('submit', (event) => {
 				event.preventDefault();
@@ -141,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				redirectToPaypal({
 					giftId: gift.id,
 					giftTitle: gift.title,
+					message: guestMessage,
 					amount: selectedAmount,
 				});
 			});
@@ -149,21 +154,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		// === Reservation Modal Logic ===
 		if (modalType === 'reservation') {
 			const reserveForm = modal.querySelector('.jo-block-gift-modal.reservation form');
-			const reservedByInput = modal.querySelector('.jo-block-gift-modal__form input[name="user-email"]');
+			let reservedByEmail = modal.querySelector('.jo-block-gift-modal__form input[name="user-email"]');
+			let reservedByName = modal.querySelector('.jo-block-gift-modal__form input[name="user-name"]');
+			let guestMessage = modal.querySelector('.jo-block-gift-modal__form textarea[name="guest_message"]');
 
-			reserveForm.addEventListener('submit', (e) => {
-				e.preventDefault();
+			reserveForm.addEventListener('submit', (event) => {
+				event.preventDefault();
 
-				const reservedBy = reservedByInput.value.trim();
+				// == Trim values
+				reservedByEmail = reservedByEmail.value.trim();
+				reservedByName = reservedByName.value.trim();
+				guestMessage = guestMessage.value.trim();
 
+				// == Build the form data
 				const formData = new FormData();
 				formData.append('action', 'jourj_reserve_gift');
 				formData.append('gift_id', gift.id);
-				formData.append('reserved_by', reservedBy);
-				formData.append('message', gift.message);
+				formData.append('reserved_by_name', reservedByName);
+				formData.append('reserved_by_email', reservedByEmail);
+				formData.append('guest_message', guestMessage);
 				formData.append('mode', modalType);
 				formData.append('nonce', jourj_gift_ajax.nonce);
 
+				console.log('Form Data:', Array.from(formData.entries()));
+
+				// == Send the form data via AJAX
 				fetch(jourj_gift_ajax.ajax_url, {
 					method: 'POST',
 					body: formData,
@@ -208,12 +223,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	/**
 	 * Redirect to PayPal
 	 */
-	function redirectToPaypal({ giftId, giftTitle, amount }) {
+	function redirectToPaypal({ giftId, giftTitle, amount, message }) {
 		const params = new URLSearchParams({
 			cmd: '_xclick',
 			business: jourj_gift_ajax.paypal_email,
 			item_number: giftId,
 			item_name: `Participation pour ${giftTitle}`,
+			message: message ?? '',
 			amount: amount,
 			currency_code: 'EUR',
 			return: `${window.location.origin}/merci?gift_id=${giftId}`,
