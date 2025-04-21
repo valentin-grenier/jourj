@@ -212,17 +212,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	function redirectToPaypal({ giftId, giftTitle, amount }) {
 		const params = new URLSearchParams({
 			cmd: '_xclick',
-			business: jourj_gift_ajax.paypal_email, // defined from PHP
+			business: jourj_gift_ajax.paypal_email,
 			item_number: giftId,
+			item_name: `Participation pour ${giftTitle}`,
 			amount: amount,
 			currency_code: 'EUR',
-			return: `${window.location.origin}/merci?gift_id=${giftId}`,
+			return: `${window.location.origin}`,
 			notify_url: `${window.location.origin}/wp-json/jourj-gifts/v1/paypal-ipn`,
 		});
 
 		const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
 
-		console.log(paypalUrl);
 		window.location.href = paypalUrl;
 	}
 });
