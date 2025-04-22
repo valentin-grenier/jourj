@@ -83,21 +83,21 @@ class JourJ_IPN_Handler
         $custom_raw = $post_data['custom'] ?? '';
         $custom_data = json_decode($custom_raw, true);
 
-        if (json_last_error() === JSON_ERROR_NONE && !empty($custom_data['guest_message'])) {
+        error_log("[JourJ Gifts] Custom data: " . json_encode($custom_data));
+        error_log("[JourJ Gifts] Custom data (raw): " . $custom_raw);
+
+
+        if (!empty($custom_data['guestMessage'])) {
             $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
 
-            foreach ($messages as $key => $message) {
-                error_log("[JourJ Gifts] Message $key: " . json_encode($message));
-            }
-
             $messages[] = [
-                'name'    => sanitize_text_field($custom_data['guest_name'] ?? ''),
-                'message' => sanitize_textarea_field($custom_data['guest_message']),
+                'name'    => sanitize_text_field($custom_data['guestName'] ?? ''),
+                'message' => sanitize_textarea_field($custom_data['guestMessage']),
                 'date'    => current_time('mysql'),
             ];
 
             update_post_meta($gift_id, '_jourj_guest_messages', $messages);
-            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guest_name']}");
+            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guestName']}");
         }
 
 
