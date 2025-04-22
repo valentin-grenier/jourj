@@ -1,6 +1,5 @@
 <?php
 
-require_once 'inc/theme-assets.php';
-require_once 'inc/block-editor.php';
-require_once 'inc/acf.php';
-require_once 'inc/helpers.php';
+foreach (glob(get_template_directory() . '/inc/*.php') as $file) {
+    require_once $file;
+}
