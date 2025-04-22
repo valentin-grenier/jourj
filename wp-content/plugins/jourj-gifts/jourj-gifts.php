@@ -4,7 +4,11 @@
  * Plugin Name: JourJ Gifts
  * Description: A plugin that registers a "gift" custom post type and associated meta fields for wedding gifts.
  * Version: 1.0
- * Author: Your Name
+ * Author: Valentin Grenier • Studio Val
+ * Author URI: https://studio-val.fr
+ * License: GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: jourj-gifts
  */
 
 if (!defined('ABSPATH')) {
