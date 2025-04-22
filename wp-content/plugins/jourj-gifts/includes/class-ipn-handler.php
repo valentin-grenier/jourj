@@ -74,15 +74,21 @@ class JourJ_IPN_Handler
             return new WP_REST_Response('Missing gift data', 400);
         }
 
-        $this->update_gift_amount($gift_id, $amount);
-        error_log("[JourJ Gifts] Payment received: Gift #$gift_id – Amount: $amount EUR");
+        $gift_title = get_the_title($gift_id);
 
-        # ✅ Save guest message if present
+        $this->update_gift_amount($gift_id, $amount);
+        error_log("[JourJ Gifts] Payment received for $gift_title – Amount: $amount EUR");
+
+        # Save guest message if present
         $custom_raw = $post_data['custom'] ?? '';
         $custom_data = json_decode($custom_raw, true);
 
         if (json_last_error() === JSON_ERROR_NONE && !empty($custom_data['guest_message'])) {
             $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
+
+            foreach ($messages as $key => $message) {
+                error_log("[JourJ Gifts] Message $key: " . json_encode($message));
+            }
 
             $messages[] = [
                 'name'    => sanitize_text_field($custom_data['guest_name'] ?? ''),
@@ -91,8 +97,10 @@ class JourJ_IPN_Handler
             ];
 
             update_post_meta($gift_id, '_jourj_guest_messages', $messages);
-            error_log("[JourJ Gifts] Guest message saved for Gift #$gift_id from {$custom_data['guest_name']}");
+            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guest_name']}");
         }
+
+
 
         return new WP_REST_Response('IPN processed', 200);
     }
