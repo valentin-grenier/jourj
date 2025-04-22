@@ -15,5 +15,5 @@
         <?php endforeach; ?>
     </ul>
 <?php else : ?>
-    <p><?php _e('No messages for this gift yet.', 'jourj-gifts'); ?></p>
+    <p><?php _e('Pas encore de messages pour ce cadeau.', 'jourj-gifts'); ?></p>
 <?php endif; ?>

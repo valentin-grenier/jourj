@@ -31,7 +31,7 @@ class JourJ_Custom_Fields
         # Add the meta box for the "gift" post type
         add_meta_box(
             'jourj_gift_details',                           # Unique ID for the meta box
-            __('Gift Details', 'jourj-gifts'),              # Box title 
+            __('Détails du cadeau', 'jourj-gifts'),              # Box title 
             array($this, 'render_gift_custom_fields_box'),  # Content callback
             'jourj_gift',                                   # Post type
             'normal',                                       # Context (normal, side, advanced)
@@ -44,7 +44,7 @@ class JourJ_Custom_Fields
     {
         add_meta_box(
             'jourj_guest_messages',                         # Unique ID for the meta box
-            __('Guest Messages', 'jourj-gifts'),            # Box title 
+            __('Mots des invités', 'jourj-gifts'),            # Box title 
             array($this, 'render_guest_messages_box'),      # Content callback
             'jourj_gift',                                   # Post type
             'normal',                                       # Context (normal, side, advanced)
