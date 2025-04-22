@@ -22,6 +22,7 @@ class JourJ_Shortcodes
         include(JOURJ_GIFTS_DIR . 'templates/gifts-list.php');
         include(JOURJ_GIFTS_DIR . 'templates/gift-modal-payment.php');
         include(JOURJ_GIFTS_DIR . 'templates/gift-modal-reservation.php');
+        include(JOURJ_GIFTS_DIR . 'templates/gift-custom-funding.php');
         return ob_get_clean();
     }
 

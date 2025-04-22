@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_67eea38f6d931",
-            "label": "Address",
+            "label": "Adresse",
             "name": "jo_lodging_address",
             "aria-label": "",
             "type": "text",
@@ -25,7 +25,7 @@
         },
         {
             "key": "field_67eeca53be9f7",
-            "label": "Address link",
+            "label": "Lien Google Maps",
             "name": "jo_lodging_address_link",
             "aria-label": "",
             "type": "url",
@@ -43,7 +43,7 @@
         },
         {
             "key": "field_67eea39f6d932",
-            "label": "Distance from event",
+            "label": "Distance",
             "name": "jo_lodging_distance",
             "aria-label": "",
             "type": "text",
@@ -64,7 +64,7 @@
         },
         {
             "key": "field_67eea3af6d933",
-            "label": "Link",
+            "label": "Lien",
             "name": "jo_lodging_link",
             "aria-label": "",
             "type": "url",
@@ -99,5 +99,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1743702618
+    "modified": 1745354538
 }

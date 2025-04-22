@@ -74,8 +74,33 @@ class JourJ_IPN_Handler
             return new WP_REST_Response('Missing gift data', 400);
         }
 
+        $gift_title = get_the_title($gift_id);
+
         $this->update_gift_amount($gift_id, $amount);
-        error_log("[JourJ Gifts] Payment received: Gift #$gift_id – Amount: $amount EUR");
+        error_log("[JourJ Gifts] Payment received for $gift_title – Amount: $amount EUR");
+
+        # Save guest message if present
+        $custom_raw = $post_data['custom'] ?? '';
+        $custom_data = json_decode($custom_raw, true);
+
+        error_log("[JourJ Gifts] Custom data: " . json_encode($custom_data));
+        error_log("[JourJ Gifts] Custom data (raw): " . $custom_raw);
+
+
+        if (!empty($custom_data['guestMessage'])) {
+            $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
+
+            $messages[] = [
+                'name'    => sanitize_text_field($custom_data['guestName'] ?? ''),
+                'message' => sanitize_textarea_field($custom_data['guestMessage']),
+                'date'    => current_time('mysql'),
+            ];
+
+            update_post_meta($gift_id, '_jourj_guest_messages', $messages);
+            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guestName']}");
+        }
+
+
 
         return new WP_REST_Response('IPN processed', 200);
     }

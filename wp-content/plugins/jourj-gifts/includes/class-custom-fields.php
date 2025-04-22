@@ -21,21 +21,30 @@ class JourJ_Custom_Fields
     # Create the meta box
     public function gift_custom_fields()
     {
+        global $post;
+
+        # Don't add the meta box if the post is "custom-funding"
+        if ($post && $post->post_name === 'custom-funding') {
+            return;
+        }
+
+        # Add the meta box for the "gift" post type
         add_meta_box(
             'jourj_gift_details',                           # Unique ID for the meta box
-            __('Gift Details', 'jourj-gifts'),              # Box title 
-            array($this, 'render_gift_custom_fields_box'),       # Content callback
+            __('Détails du cadeau', 'jourj-gifts'),              # Box title 
+            array($this, 'render_gift_custom_fields_box'),  # Content callback
             'jourj_gift',                                   # Post type
             'normal',                                       # Context (normal, side, advanced)
             'high'                                          # Priority (high, default, low)
         );
     }
 
+    # Guest messages meta box
     public function guests_messages()
     {
         add_meta_box(
             'jourj_guest_messages',                         # Unique ID for the meta box
-            __('Guest Messages', 'jourj-gifts'),            # Box title 
+            __('Mots des invités', 'jourj-gifts'),            # Box title 
             array($this, 'render_guest_messages_box'),      # Content callback
             'jourj_gift',                                   # Post type
             'normal',                                       # Context (normal, side, advanced)

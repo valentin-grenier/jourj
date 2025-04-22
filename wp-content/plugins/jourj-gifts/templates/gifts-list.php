@@ -1,12 +1,15 @@
 <?php
 
-# Get gifts from "jourj_gift" post type
+# Get gifts from "jourj_gift" post type, excluding the one with "custom-funding" slug
 $gifts = new WP_Query(array(
     'post_type' => 'jourj_gift',
     'posts_per_page' => -1,
     'post_status' => 'publish',
     'orderby' => 'date',
     'order' => 'DESC',
+    'post__not_in' => array(
+        get_page_by_path('custom-funding', OBJECT, 'jourj_gift')->ID
+    ),
 ));
 
 ?>

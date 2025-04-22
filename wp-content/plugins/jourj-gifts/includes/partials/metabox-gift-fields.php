@@ -9,13 +9,15 @@
  *  - $funded
  *  - $reserved_by
  *  - $is_featured
+ *  - $reserved_by_name
+ *  - $reserved_by_email
  */
 ?>
 
 <div class="jourj-gifts-fields">
     <!-- Total Amount -->
     <p>
-        <label for="jourj_total_amount"><?php esc_html_e('Total Amount (€):', 'jourj'); ?></label><br>
+        <label for="jourj_total_amount"><?php esc_html_e('Montant total (€):', 'jourj'); ?></label><br>
         <input
             type="number"
             step="0.01"
@@ -28,7 +30,7 @@
 
     <!-- Custom Message -->
     <p>
-        <label for="jourj_gift_description"><?php esc_html_e('Gift description:', 'jourj'); ?></label><br>
+        <label for="jourj_gift_description"><?php esc_html_e('Description du cadeau :', 'jourj'); ?></label><br>
         <textarea
             name="jourj_gift_description"
             id="jourj_gift_description"
@@ -45,7 +47,7 @@
             value="1"
             <?php checked($is_featured, 1); ?>>
         <label for="jourj_is_featured">
-            <?php esc_html_e('Highlight this gift?', 'jourj'); ?>
+            <?php esc_html_e('Cadeau mis en avant', 'jourj'); ?>
         </label>
     </p>
 
@@ -54,7 +56,7 @@
 
     <!-- Already Funded -->
     <p>
-        <label for="jourj_funded"><?php esc_html_e('Already Funded Amount:', 'jourj'); ?></label><br>
+        <label for="jourj_funded"><?php esc_html_e('Montant collecté :', 'jourj'); ?></label><br>
         <input
             type="number"
             step="0.01"
@@ -76,12 +78,12 @@
             id="jourj_reserved"
             value="1"
             <?php checked($reserved, 1); ?>>
-        <label for="jourj_reserved"><?php esc_html_e('Reserved?', 'jourj'); ?></label>
+        <label for="jourj_reserved"><?php esc_html_e('Cadeau réservé', 'jourj'); ?></label>
     </p>
 
     <!-- Reserved By Name -->
     <p>
-        <label for="jourj_reserved_by_name"><?php esc_html_e('Guest name:', 'jourj'); ?></label><br>
+        <label for="jourj_reserved_by_name"><?php esc_html_e('Nom de la réservation :', 'jourj'); ?></label><br>
         <input
             type="email"
             name="jourj_reserved_by_name"
@@ -93,7 +95,7 @@
 
     <!-- Reserved By Email -->
     <p>
-        <label for="jourj_reserved_by_email"><?php esc_html_e('Guest email:', 'jourj'); ?></label><br>
+        <label for="jourj_reserved_by_email"><?php esc_html_e('Adresse email de la réservation :', 'jourj'); ?></label><br>
         <input
             type="email"
             name="jourj_reserved_by_email"
@@ -105,7 +107,7 @@
 
     <!-- Cancellation Link -->
     <p>
-        <label for="jourj_cancellation_link"><?php esc_html_e('Cancellation Link:', 'jourj'); ?></label><br>
+        <label for="jourj_cancellation_link"><?php esc_html_e("Lien d'annulation : ", 'jourj'); ?></label><br>
         <input
             type="text"
             name="jourj_cancellation_link"

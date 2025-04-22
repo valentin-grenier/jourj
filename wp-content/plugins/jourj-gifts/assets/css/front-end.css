@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .jo-block-gifts-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -234,4 +235,117 @@
   opacity: 1;
   visibility: visible;
   z-index: 9998;
+}
+
+.jo-block-gift-custom-funding {
+  max-width: 750px;
+  width: 100%;
+  margin: 4rem auto 0;
+  transition: all 400ms;
+}
+.jo-block-gift-custom-funding p {
+  text-align: center;
+}
+.jo-block-gift-custom-funding__button {
+  border-radius: 0.5rem;
+  border-width: 0;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: 0.75rem;
+  padding-right: 1rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 200ms;
+  cursor: pointer;
+  background: var(--wp--preset--color--primary);
+  color: var(--wp--preset--color--white);
+  display: block;
+  margin: 1.5rem auto 0;
+}
+.jo-block-gift-custom-funding__button:hover {
+  opacity: 0.8;
+}
+.jo-block-gift-custom-funding__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--wp--preset--color--white);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--wp--preset--shadow--md);
+  min-width: 400px;
+  width: 500px;
+  overflow: hidden;
+  margin: 2rem auto 0;
+  transition: all 400ms;
+}
+.jo-block-gift-custom-funding__form.hidden {
+  opacity: 0;
+  padding: 0 1.5rem;
+  margin-top: 0rem;
+  height: 0;
+}
+.jo-block-gift-custom-funding__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-right: 2rem;
+  line-height: normal;
+  font-size: 0.875rem;
+}
+.jo-block-gift-custom-funding__form label span {
+  line-height: normal;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.jo-block-gift-custom-funding__form input:not([type=submit]),
+.jo-block-gift-custom-funding__form textarea {
+  display: block;
+  border: 1px solid var(--wp--preset--color--primary-light);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-family: var(--wp--preset--font-family--body);
+  transition: all 200ms;
+  outline-color: var(--wp--preset--color--secondary);
+}
+.jo-block-gift-custom-funding__form input:not([type=submit]):active, .jo-block-gift-custom-funding__form input:not([type=submit]):focus,
+.jo-block-gift-custom-funding__form textarea:active,
+.jo-block-gift-custom-funding__form textarea:focus {
+  outline-color: var(--wp--preset--color--secondary);
+}
+.jo-block-gift-custom-funding__form input[type=submit] {
+  background-color: var(--wp--preset--color--primary);
+  border-radius: 0.5rem;
+  border-width: 0;
+  color: var(--wp--preset--color--white);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: normal;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 200ms;
+}
+.jo-block-gift-custom-funding__form input[type=submit]:hover {
+  opacity: 0.8;
+}
+.jo-block-gift-custom-funding__form--input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.jo-block-gift-custom-funding__form--input.number:after {
+  content: "€";
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
 }
