@@ -1,0 +1,30 @@
+@mixin button-base {
+	border-radius: 0.5rem;
+	border-width: 0;
+	font-family: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: normal;
+	padding-top: 0.75rem;
+	padding-right: 1rem;
+	padding-bottom: 0.75rem;
+	padding-left: 1rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: all 200ms;
+	cursor: pointer;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+@mixin button-primary {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--white);
+}
+
+@mixin button-secondary {
+	background: var(--wp--preset--color--secondary-light);
+	color: var(--wp--preset--color--primary);
+}

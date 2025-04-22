@@ -12,6 +12,7 @@ class JourJ_Post_Types
     {
         add_action('init', [$this, 'register_cpt']);
         add_filter('use_block_editor_for_post_type', [$this, 'disable_block_editor'], 10, 2);
+        add_action('init', [$this, 'add_default_gift']);
     }
 
     # Define the custom post type "gift"
@@ -37,7 +38,7 @@ class JourJ_Post_Types
             'public'             => true,
             'has_archive'        => true,
             'rewrite'            => ['slug' => 'gifts'],
-            'supports'           => ['title', 'thumbnail'],        # Title, Description, Featured Image
+            'supports'           => ['title', 'thumbnail'],     # Title, Description, Featured Image
             'menu_icon'          => 'dashicons-editor-ul',      # Optional dashicon
             'show_in_rest'       => true,                       # Enable block editor support
             'menu_position'     => 10,                          # Position in the admin menu
@@ -53,5 +54,28 @@ class JourJ_Post_Types
             return false;
         }
         return $use_block_editor;
+    }
+
+    # Add a default gift "Custom funding" to the list of gifts
+    public function add_default_gift()
+    {
+        $default_gift = array(
+            'post_title'   => 'Custom funding',
+            'post_type'    => 'jourj_gift',
+            'post_status'  => 'publish',
+            'post_content' => 'Custom funding for your gift.',
+        );
+
+        // Check if the post already exists with its title and post type using WP_Query
+        $query = new WP_Query([
+            'post_type'  => $default_gift['post_type'],
+            'title'      => $default_gift['post_title'],
+            'post_status' => $default_gift['post_status'],
+        ]);
+
+        // Insert the default gift if it doesn't exist
+        if (!$query->have_posts()) {
+            wp_insert_post($default_gift);
+        }
     }
 }

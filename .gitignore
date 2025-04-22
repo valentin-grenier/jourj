@@ -6,7 +6,7 @@
 composer.lock
 /cgi-bin/
 node_modules/
-package.lock.json
+package-lock.json
 *.env
 
 # WORDPRESS

@@ -31,6 +31,13 @@ class JourJ_Init
             'nonce'    => wp_create_nonce('jourj_gift_nonce'),
             'paypal_email' => $_ENV['PAYPAL_EMAIL'] ?? null
         ));
+
+        wp_enqueue_script('jourj-gifts-custom-funding', $plugin_root_url . 'assets/js/gift-custom-funding.js', array(), '1.0.0', true);
+        wp_localize_script('jourj-gifts-custom-funding', 'jourj_gift_custom_funding_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce'    => wp_create_nonce('jourj_gift_custom_funding_nonce'),
+            'paypal_email' => $_ENV['PAYPAL_EMAIL'] ?? null
+        ));
     }
 
     # Load admin scripts

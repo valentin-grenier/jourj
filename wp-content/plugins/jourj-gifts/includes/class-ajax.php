@@ -39,7 +39,6 @@ class Jourj_Gift_Ajax
         wp_send_json_success($gift_data);
     }
 
-
     # Get gift data by ID
     public function get_gift_data($gift_id, $mode = 'payment')
     {

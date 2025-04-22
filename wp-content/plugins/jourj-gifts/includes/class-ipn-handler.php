@@ -77,6 +77,23 @@ class JourJ_IPN_Handler
         $this->update_gift_amount($gift_id, $amount);
         error_log("[JourJ Gifts] Payment received: Gift #$gift_id – Amount: $amount EUR");
 
+        # ✅ Save guest message if present
+        $custom_raw = $post_data['custom'] ?? '';
+        $custom_data = json_decode($custom_raw, true);
+
+        if (json_last_error() === JSON_ERROR_NONE && !empty($custom_data['guest_message'])) {
+            $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
+
+            $messages[] = [
+                'name'    => sanitize_text_field($custom_data['guest_name'] ?? ''),
+                'message' => sanitize_textarea_field($custom_data['guest_message']),
+                'date'    => current_time('mysql'),
+            ];
+
+            update_post_meta($gift_id, '_jourj_guest_messages', $messages);
+            error_log("[JourJ Gifts] Guest message saved for Gift #$gift_id from {$custom_data['guest_name']}");
+        }
+
         return new WP_REST_Response('IPN processed', 200);
     }
 
