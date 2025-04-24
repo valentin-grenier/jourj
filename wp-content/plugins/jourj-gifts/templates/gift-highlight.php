@@ -14,6 +14,10 @@ $gift = new WP_Query(array(
     )
 ));
 
+if (!$gift->have_posts()) {
+    return;
+}
+
 # Gift data
 $gift_id = $gift->posts[0]->ID;
 $title = get_the_title($gift_id);
