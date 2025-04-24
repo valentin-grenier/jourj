@@ -37,7 +37,7 @@ $icon_plane = plugins_url('assets/img/icon-airplane.png', __DIR__);
 $icon_island = plugins_url('assets/img/icon-island.png', __DIR__);
 ?>
 
-<div class="jo-block-gift-highlight">
+<div class="jo-block-gift-highlight" data-gift-id="<?php echo esc_attr($gift_id); ?>">
     <div class="jo-block-gift-highlight__main">
         <div class="jo-block-gift-highlight__content">
             <h3><?php echo esc_html($title); ?></h3>

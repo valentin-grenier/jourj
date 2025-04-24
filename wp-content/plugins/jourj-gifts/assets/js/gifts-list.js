@@ -1,8 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
 	if (!document.querySelector('.jo-block-gifts-list')) return;
 
+	const giftHighlight = document.querySelector('.jo-block-gift-highlight');
 	const gifts = document.querySelectorAll('.jo-block-gifts-list__item');
 
+	/**
+	 * Open modal for gift highlight
+	 */
+	if (giftHighlight) {
+		const giftId = giftHighlight.dataset.giftId;
+		const button = giftHighlight.querySelector('button');
+
+		button.addEventListener('click', () => {
+			fetchGiftData(giftId, 'payment');
+		});
+	}
+
+	/**
+	 * Open modal for each gift item
+	 */
 	gifts.forEach((gift) => {
 		const giftId = gift.dataset.giftId;
 

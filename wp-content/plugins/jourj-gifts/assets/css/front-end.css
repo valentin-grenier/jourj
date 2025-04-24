@@ -376,6 +376,7 @@
   font-weight: 700;
 }
 .jo-block-gift-highlight__content .wp-block-button__link {
+  width: fit-content;
   margin-top: 1.5rem;
   cursor: pointer;
 }
@@ -433,6 +434,7 @@
   top: 50%;
   right: -1.5rem;
   transform: translateY(-50%);
+  display: flex;
   background: var(--wp--preset--color--white);
   border-radius: 50%;
   padding: 0.5rem;
@@ -446,6 +448,7 @@
   top: 50%;
   right: 0;
   transform: translateY(-50%);
+  display: flex;
   background: var(--wp--preset--color--white);
   border-radius: 50%;
   padding: 0.5rem;
