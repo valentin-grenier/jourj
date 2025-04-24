@@ -61,6 +61,7 @@ class JourJ_Post_Types
     {
         $default_gift = array(
             'post_title'   => 'Participations libres',
+            'post_name'    => 'custom-funding',
             'post_type'    => 'jourj_gift',
             'post_status'  => 'publish',
         );
