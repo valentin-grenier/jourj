@@ -10,6 +10,13 @@ $gifts = new WP_Query(array(
     'post__not_in' => array(
         get_page_by_path('custom-funding', OBJECT, 'jourj_gift')->ID
     ),
+    'meta_query' => [
+        [
+            'key'   => '_jourj_is_highlighted',
+            'value' => '0',
+            'compare' => '='
+        ]
+    ]
 ));
 
 ?>

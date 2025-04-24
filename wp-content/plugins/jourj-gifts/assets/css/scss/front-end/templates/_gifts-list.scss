@@ -2,6 +2,9 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	gap: 2rem;
+	padding-top: 2rem;
+	margin-top: 2rem;
+	border-top: solid 1px var(--wp--preset--color--tertiary-light);
 
 	&__item {
 		background: var(--wp--preset--color--white);

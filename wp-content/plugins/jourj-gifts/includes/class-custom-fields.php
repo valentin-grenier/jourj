@@ -65,7 +65,7 @@ class JourJ_Custom_Fields
         $funded = get_post_meta($post->ID, '_jourj_funded', true);
         $reserved_by_name = get_post_meta($post->ID, '_jourj_reserved_by_name', true);
         $reserved_by_email = get_post_meta($post->ID, '_jourj_reserved_by_email', true);
-        $is_featured = get_post_meta($post->ID, '_jourj_is_featured', true);
+        $is_featured = get_post_meta($post->ID, '_jourj_is_highlighted', true);
         $cancellation_link = get_post_meta($post->ID, '_jourj_cancellation_link', true);
 
         # Default or cast
@@ -112,7 +112,7 @@ class JourJ_Custom_Fields
             '_jourj_funded' => filter_input(INPUT_POST, 'jourj_funded', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
             '_jourj_reserved_by_name' => sanitize_text_field($_POST['jourj_reserved_by_name'] ?? ''),
             '_jourj_reserved_by_email' => sanitize_email($_POST['jourj_reserved_by_email'] ?? ''),
-            '_jourj_is_featured' => !empty($_POST['jourj_is_featured']) ? 1 : 0,
+            '_jourj_is_highlighted' => !empty($_POST['jourj_is_featured']) ? 1 : 0,
             '_jourj_cancellation_link' => sanitize_url($_POST['jourj_cancellation_link'] ?? ''),
         ];
 
