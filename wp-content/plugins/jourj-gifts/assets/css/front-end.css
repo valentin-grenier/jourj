@@ -456,3 +456,32 @@
 .jo-block-gift-highlight__progress-bar--icon img {
   width: 1.5rem;
 }
+
+.jo-page-thank-you {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 0;
+  text-align: center;
+}
+.jo-page-thank-you__text h1 {
+  margin-bottom: 0.5rem;
+}
+.jo-page-thank-you .wp-block-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.jo-page-thank-you .wp-block-buttons .wp-block-button.is-style-button-secondary .wp-block-button__link {
+  background: var(--wp--preset--color--tertiary-light);
+  color: var(--wp--preset--color--primary);
+}
+@media screen and (max-width: 550px) {
+  .jo-page-thank-you .wp-block-buttons {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

@@ -28,3 +28,8 @@
 	background: var(--wp--preset--color--secondary-light);
 	color: var(--wp--preset--color--primary);
 }
+
+@mixin button-tertiary {
+	background: var(--wp--preset--color--tertiary-light);
+	color: var(--wp--preset--color--primary);
+}

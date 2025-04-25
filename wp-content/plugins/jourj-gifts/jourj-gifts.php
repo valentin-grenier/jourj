@@ -59,6 +59,7 @@ function jourj_gifts_init()
     new JourJ_Shortcodes();
     new Jourj_Gift_Ajax();
     new JourJ_IPN_Handler();
+    new JourJ_Pages();
 }
 
 add_action('plugins_loaded', 'jourj_gifts_init');
