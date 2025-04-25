@@ -148,8 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 			// == Get guest message value and trim it
-			let guestMessage = modal.querySelector('.jo-block-gift-modal__form textarea[name="guest_message"]');
-			guestMessage = guestMessage.value.trim();
+			const guestMessageElement = modal.querySelector('.jo-block-gift-modal__form textarea[name="guest_message"]');
+			let guestMessage = guestMessageElement.value.trim();
+
+			guestMessageElement.addEventListener('input', () => {
+				guestMessage = guestMessageElement.value.trim();
+			});
 
 			// == Build PayPal URL redirect
 			const form = modal.querySelector('.jo-block-gift-modal__form');

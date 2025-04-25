@@ -24,13 +24,14 @@ $title = get_the_title($gift_id);
 $description = get_post_meta($gift_id, '_jourj_gift_description', true);
 $image = get_the_post_thumbnail($gift_id, 'full');
 $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($gift_id), 'full');
-$image_url = $image_url[0]; // Get the URL of the image
+$image_url = $image_url[0];
 $image_alt = get_post_meta(get_post_thumbnail_id($gift_id), '_wp_attachment_image_alt', true);
-$price = intval(number_format(get_post_meta($gift_id, '_jourj_total_amount', true), 0, '.', ' '));
+$price = intval(get_post_meta($gift_id, '_jourj_total_amount', true));
+$price_formatted = number_format($price, 0, '.', ' ');
 $funded = intval(get_post_meta($gift_id, '_jourj_funded', true));
 $funded_percentage = $funded === 0 ? 0 : ($funded / $price) * 100;
-$funded_percentage = min($funded_percentage, 100); // Ensure it doesn't exceed 100%
-$funded_percentage = number_format($funded_percentage, 0, '.', ''); // Format to 0 decimal places
+$funded_percentage = min($funded_percentage, 100); # Ensure it doesn't exceed 100%
+$funded_percentage = number_format($funded_percentage, 0, '.', ''); # Format to 0 decimal places
 
 # Icons
 $icon_plane = plugins_url('assets/img/icon-airplane.png', __DIR__);
@@ -47,7 +48,7 @@ $icon_island = plugins_url('assets/img/icon-island.png', __DIR__);
             </p>
 
             <div class="jo-block-gift-highlight__content--price">
-                <?php echo __('Nous estimons le montant du voyage à', 'jourj-gifts') . ' ' . esc_html($price) . '€.'; ?>
+                <?php echo __('Nous estimons le montant du voyage à', 'jourj-gifts') . ' ' . esc_html($price_formatted) . '€.'; ?>
             </div>
 
             <button class="wp-block-button__link"><?php _e('Participer à notre voyage de noces', 'jourj-gifts'); ?></button>

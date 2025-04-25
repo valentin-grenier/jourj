@@ -49,13 +49,20 @@ class JourJ_IPN_Handler
         }
 
         $body = wp_remote_retrieve_body($response);
-        if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || $_SERVER['HTTP_USER_AGENT'] === 'PostmanRuntime/7.32.2') {
+        error_log('[JourJ Gifts] IPN response: ' . $body);
+
+        # Development bypass: localhost or Postman
+        if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || (strpos($_SERVER['HTTP_USER_AGENT'], 'PostmanRuntime') !== false)) {
             $body = 'VERIFIED';
         }
 
+        # Check if the response is 'VERIFIED'
         if (trim($body) !== 'VERIFIED') {
             error_log('[JourJ Gifts] IPN not verified: ' . $body);
-            return new WP_REST_Response('IPN not verified', 400);
+            return new WP_REST_Response('IPN no verified', 400);
+        } else {
+            error_log('[JourJ Gifts] IPN verified: ' . $body);
+            return new WP_REST_Response('IPN verified', 200);
         }
 
         # Parse data after validation
