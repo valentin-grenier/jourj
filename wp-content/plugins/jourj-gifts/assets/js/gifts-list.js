@@ -147,6 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
 				hiddenFieldAmount.value = numericValue;
 			});
 
+			// == Get guest name value and trim it
+			const guestNameElement = modal.querySelector('.jo-block-gift-modal__form input[name="guest_name"]');
+			let guestName = guestNameElement.value.trim();
+
+			guestNameElement.addEventListener('input', () => {
+				guestName = guestNameElement.value.trim();
+			});
+
 			// == Get guest message value and trim it
 			const guestMessageElement = modal.querySelector('.jo-block-gift-modal__form textarea[name="guest_message"]');
 			let guestMessage = guestMessageElement.value.trim();
@@ -165,7 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				redirectToPaypal({
 					giftId: gift.id,
 					giftTitle: gift.title,
-					message: guestMessage,
+					guest_name: guestName,
+					guest_message: guestMessage,
 					amount: selectedAmount,
 				});
 			});
@@ -243,7 +252,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	/**
 	 * Redirect to PayPal
 	 */
-	function redirectToPaypal({ giftId, giftTitle, amount, message }) {
+	function redirectToPaypal({ giftId, giftTitle, amount, guest_name, guest_message }) {
+		const customData = JSON.stringify({
+			guest_name,
+			guest_message,
+		});
+
 		const params = new URLSearchParams({
 			cmd: '_xclick',
 			business: jourj_gift_ajax.paypal_email,
@@ -252,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			message: message ?? '',
 			amount: amount,
 			currency_code: 'EUR',
+			custom: customData,
 			return: `${window.location.origin}/merci?gift_id=${giftId}`,
 			notify_url: `${window.location.origin}/wp-json/jourj-gifts/v1/paypal-ipn`,
 		});

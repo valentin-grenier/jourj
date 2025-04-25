@@ -87,8 +87,12 @@ class JourJ_IPN_Handler
         $this->update_gift_amount($gift_id, $amount);
         error_log("[JourJ Gifts] Payment received for $gift_title – Amount: $amount EUR");
 
-        # Save guest message if present
+        # Debug post_data
+        foreach ($post_data as $key => $value) {
+            error_log("[JourJ Gifts] IPN data: $key = $value");
+        }
 
+        # Save guest message if present
         $custom_raw = $post_data['custom'] ?? '';
         $custom_data = json_decode($custom_raw, true);
 
