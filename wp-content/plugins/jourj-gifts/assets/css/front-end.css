@@ -196,6 +196,7 @@
   margin-bottom: 1rem;
 }
 .jo-block-gift-modal input[type=submit] {
+  height: fit-content;
   text-transform: none;
 }
 .jo-block-gift-modal textarea {
