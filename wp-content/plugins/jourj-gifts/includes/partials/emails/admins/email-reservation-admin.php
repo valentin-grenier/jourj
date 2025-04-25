@@ -1,10 +1,3 @@
-<?php
-$gift_id = strval($gift_id);
-$gift_title = get_the_title($gift_id);
-$guest_name = get_post_meta($gift_id, '_jourj_reserved_by_name', true);
-$cancellation_link = get_post_meta($gift_id, '_jourj_cancellation_link', true);
-?>
-
 <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #F4F8F7; padding: 24px">
     <div style="max-width: 600px; margin: 0 auto; padding: 24px; border-radius: 12px; background: #ffffff">
         <h2 style="margin-top: 0;">Nouvelle réservation de cadeau 🎁</h2>
@@ -13,9 +6,9 @@ $cancellation_link = get_post_meta($gift_id, '_jourj_cancellation_link', true);
 
         <?php if ($guest_message): ?>
             <p><?php echo esc_html($guest_name); ?> a voulu vous laisser un message avec sa réservation :</p>
-            <blockquote style="background: #F4F8F7; padding: 16px; border-radius: 8px; margin: 16px 0;">
-                <p style="margin: 0;"><?php echo esc_html($guest_message); ?></p>
-            </blockquote>
+            <div style="background: #F4F8F7; padding: 16px; border-radius: 8px; margin: 16px 0; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333;">
+                <p style="margin: 0;"><?php echo nl2br($guest_message); ?></p>
+            </div>
         <?php endif; ?>
 
         <p>Si vous souhaitez annuler la réservation, vous pouvez le faire en cliquant sur le bouton ci-dessous :</p>

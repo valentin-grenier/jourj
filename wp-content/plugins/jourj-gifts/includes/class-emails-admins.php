@@ -16,7 +16,7 @@ class JourJ_Emails_Admins
       wp_mail($to, $subject, $content, $headers);
    }
 
-   # Send a confirmation email to the user after a reservation
+   # Send a confirmation email to the admins after a reservation
    public function send_reservation_confirmation_email($email, $link, $gift_id, $guest_message)
    {
       # Check if mandatory information are provided
@@ -36,7 +36,12 @@ class JourJ_Emails_Admins
       }
 
       # Build the email subject and message
+      $gift_id = absint($gift_id);
       $gift_title = get_the_title($gift_id);
+      $guest_message = wp_unslash($guest_message);
+      $guest_name = get_post_meta($gift_id, '_jourj_reserved_by_name', true);
+      $cancellation_link = get_post_meta($gift_id, '_jourj_cancellation_link', true);
+
       $subject = __("[Site web] $gift_title réservé ! 🎉", 'jourj-gifts');
 
       ob_start();
@@ -48,7 +53,7 @@ class JourJ_Emails_Admins
    }
 
    # Send a confirmation email to the user after a reservation cancellation
-   public function send_reservation_cancellation_email($email, $link)
+   public function send_reservation_cancellation_email($email, $link, $gift_id, $guest_name)
    {
       # Check if the user email and link are provided
       if (empty($email)) {
@@ -61,11 +66,15 @@ class JourJ_Emails_Admins
          return;
       }
 
+      # Infos for the email
+      $gift_title = get_the_title($gift_id);
+      $guest_name = wp_unslash($guest_name);
+
       # Build the email subject and message
       $subject = __('Annulation de réservation - Cadeau Rébecca et Aurélien', 'jourj-gifts');
 
       ob_start();
-      include plugin_dir_path(__FILE__) . './partials/emails/users/email-reservation-cancellation-guest.php';
+      include plugin_dir_path(__FILE__) . './partials/emails/admins/email-reservation-cancellation-admin.php';
       $message = ob_get_clean();
 
       $this->send_email($email, $subject, $message);

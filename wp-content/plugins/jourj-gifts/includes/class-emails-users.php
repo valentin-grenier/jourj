@@ -49,7 +49,7 @@ class JourJ_Emails_Users
    }
 
    # Send a confirmation email to the user after a reservation cancellation
-   public function send_reservation_cancellation_email($email, $link)
+   public function send_reservation_cancellation_email($email, $gift_id, $guest_name)
    {
       # Check if the user email and link are provided
       if (empty($email)) {
@@ -57,16 +57,15 @@ class JourJ_Emails_Users
          return;
       }
 
-      if (empty($link)) {
-         error_log("[JourJ Gifts - Email] No cancellation link provided for confirmation email.");
-         return;
-      }
+      # Infos for the email
+      $gift_title = get_the_title($gift_id);
+      $guest_name = wp_unslash($guest_name);
 
       # Build the email subject and message
       $subject = __('Annulation de réservation - Cadeau Rébecca et Aurélien', 'jourj-gifts');
 
       ob_start();
-      include plugin_dir_path(__FILE__) . './partials/emails/users/email-reservation-cancellation-guest.php';
+      include plugin_dir_path(__FILE__) . './partials/emails/users/email-reservation-cancellation-user.php';
       $message = ob_get_clean();
 
       $this->send_email($email, $subject, $message);

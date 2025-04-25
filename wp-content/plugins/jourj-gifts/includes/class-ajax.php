@@ -136,8 +136,9 @@ class Jourj_Gift_Ajax
         $emails_users->send_reservation_confirmation_email($user_email, $cancellation_link, $gift_id);
 
         # Send the reservation confirmation email to the admins
+        $admin_email = isset($_ENV['PAYPAL_EMAIL']) ? sanitize_email($_ENV['PAYPAL_EMAIL']) : get_option('admin_email');
         $emails_admins = new JourJ_Emails_Admins();
-        $emails_admins->send_reservation_confirmation_email($user_email, $cancellation_link, $gift_id, $guest_message);
+        $emails_admins->send_reservation_confirmation_email($admin_email, $cancellation_link, $gift_id, $guest_message);
 
         # Send confirmation response
         wp_send_json_success(['message' => 'Cadeau réservé avec succès']);

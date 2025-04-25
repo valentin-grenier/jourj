@@ -57,6 +57,19 @@ class JourJ_Shortcodes
             return false;
         }
 
+        # Gather infos for the email
+        $guest_email = get_post_meta($gift_id, '_jourj_reserved_by_email', true);
+        $guest_name = get_post_meta($gift_id, '_jourj_reserved_by_name', true);
+
+        # Send cancellation email to the user
+        $email_handler_user = new JourJ_Emails_Users();
+        $email_handler_user->send_reservation_cancellation_email($guest_email, $gift_id, $guest_name);
+
+        # Send cancellation email to the admins
+        $admin_email = isset($_ENV['PAYPAL_EMAIL']) ? $_ENV['PAYPAL_EMAIL'] : get_option('admin_email');
+        $email_handler_admin = new JourJ_Emails_Admins();
+        $email_handler_admin->send_reservation_cancellation_email($admin_email, $cancellation_link, $gift_id, $guest_name);
+
         # Delete reservation data
         update_post_meta($gift_id, '_jourj_reserved', 0);
         delete_post_meta($gift_id, '_jourj_reserved_by_name');
