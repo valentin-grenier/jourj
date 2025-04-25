@@ -26,7 +26,7 @@ $image = get_the_post_thumbnail($gift_id, 'full');
 $image_url = wp_get_attachment_image_src(get_post_thumbnail_id($gift_id), 'full');
 $image_url = $image_url[0]; // Get the URL of the image
 $image_alt = get_post_meta(get_post_thumbnail_id($gift_id), '_wp_attachment_image_alt', true);
-$price = number_format(intval(get_post_meta($gift_id, '_jourj_total_amount', true)), 0, '.', ' ');
+$price = intval(number_format(get_post_meta($gift_id, '_jourj_total_amount', true), 0, '.', ' '));
 $funded = intval(get_post_meta($gift_id, '_jourj_funded', true));
 $funded_percentage = $funded === 0 ? 0 : ($funded / $price) * 100;
 $funded_percentage = min($funded_percentage, 100); // Ensure it doesn't exceed 100%
