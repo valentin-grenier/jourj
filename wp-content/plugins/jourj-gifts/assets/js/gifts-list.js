@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const imageEl = modal.querySelector('.gift-image');
 
 		if (titleEl) titleEl.textContent = gift.title;
-		if (priceEl) priceEl.textContent = `${gift.price}€`;
+		if (priceEl) priceEl.textContent = `${gift.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`;
 
 		if (imageEl && gift.image) {
 			imageEl.setAttribute('src', gift.image);
