@@ -291,7 +291,8 @@
 				"typography": {
 					"textTransform": "uppercase",
 					"fontWeight": "600",
-					"lineHeight": "normal"
+					"lineHeight": "normal",
+					"fontSize": "14px"
 				},
 				"border": {
 					"radius": "0.5rem"
