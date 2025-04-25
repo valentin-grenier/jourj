@@ -98,10 +98,13 @@ class JourJ_IPN_Handler
 
             error_log("[JourJ Gifts] Existing messages: " . print_r($messages, true));
 
+            $current_datetime = current_datetime()->getTimestamp();
+            $current_datetime = date('Y-m-d H:i:s', $current_datetime);
+
             $messages[] = [
                 'name'    => sanitize_text_field($custom_data['guest_name'] ?? ''),
                 'message' => sanitize_textarea_field($custom_data['guest_message']),
-                'date'    => current_time('mysql'),
+                'date'    => $current_datetime,
             ];
 
             update_post_meta($gift_id, '_jourj_guest_messages', $messages);
