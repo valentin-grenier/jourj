@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					.then((json) => {
 						if (json.success) {
 							alert('Réservation réussie !');
+							window.location.reload();
 						} else {
 							console.error(json.data || 'Erreur lors de la réservation.');
 						}
