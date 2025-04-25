@@ -49,7 +49,6 @@ class JourJ_IPN_Handler
         }
 
         $body = wp_remote_retrieve_body($response);
-        error_log('[JourJ Gifts] IPN response: ' . $body);
 
         # Development bypass: localhost or Postman
         if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' || (strpos($_SERVER['HTTP_USER_AGENT'], 'PostmanRuntime') !== false)) {
@@ -62,15 +61,16 @@ class JourJ_IPN_Handler
             return new WP_REST_Response('IPN no verified', 400);
         } else {
             error_log('[JourJ Gifts] IPN verified: ' . $body);
-            return new WP_REST_Response('IPN verified', 200);
         }
+
+        error_log('ici 1');
 
         # Parse data after validation
         parse_str($raw_post, $post_data);
 
         if ($post_data['payment_status'] !== 'Completed') {
             error_log('[JourJ Gifts] Payment not completed');
-            return new WP_REST_Response('Payment not completed', 200);
+            return new WP_REST_Response('Payment not completed', 400);
         }
 
         $gift_id = intval($post_data['item_number'] ?? 0);
@@ -90,23 +90,23 @@ class JourJ_IPN_Handler
         $custom_raw = $post_data['custom'] ?? '';
         $custom_data = json_decode($custom_raw, true);
 
-        error_log("[JourJ Gifts] Custom data: " . json_encode($custom_data));
         error_log("[JourJ Gifts] Custom data (raw): " . $custom_raw);
+        error_log("[JourJ Gifts] Custom message: " . print_r($custom_data['guest_message'], true));
 
-
-        if (!empty($custom_data['guestMessage'])) {
+        if (!empty($custom_data['guest_message'])) {
             $messages = get_post_meta($gift_id, '_jourj_guest_messages', true) ?: [];
 
+            error_log("[JourJ Gifts] Existing messages: " . print_r($messages, true));
+
             $messages[] = [
-                'name'    => sanitize_text_field($custom_data['guestName'] ?? ''),
-                'message' => sanitize_textarea_field($custom_data['guestMessage']),
+                'name'    => sanitize_text_field($custom_data['guest_name'] ?? ''),
+                'message' => sanitize_textarea_field($custom_data['guest_message']),
                 'date'    => current_time('mysql'),
             ];
 
             update_post_meta($gift_id, '_jourj_guest_messages', $messages);
-            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guestName']}");
+            error_log("[JourJ Gifts] Guest message saved for $gift_title from {$custom_data['guest_name']}");
         }
-
 
 
         return new WP_REST_Response('IPN processed', 200);
