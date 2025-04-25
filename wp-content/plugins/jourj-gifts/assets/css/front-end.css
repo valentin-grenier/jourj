@@ -377,6 +377,7 @@
 }
 .jo-block-gift-highlight__content .wp-block-button__link {
   width: fit-content;
+  height: fit-content;
   margin-top: 1.5rem;
   cursor: pointer;
 }
