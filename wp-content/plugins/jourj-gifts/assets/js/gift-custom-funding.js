@@ -50,7 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 
-		// == Redirect to PayPal with the custom amount
+		// == Clean the guest name and message
+		const guestNameValue = guestName.value.trim();
+		const guestMessageValue = guestMessage.value.trim();
+
+		// == Redirect to PayPal with the custom amount and guest name/message
 		redirectToPaypal({
 			giftId: giftId.value,
 			amount: parseInt(amount.value, 10),
@@ -62,17 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	/**
 	 * Redirect to PayPal
 	 */
-	function redirectToPaypal({ giftId, amount, guestName, guestMessage }) {
+	function redirectToPaypal({ giftId, amount, guest_name, guest_message }) {
 		const customData = JSON.stringify({
-			guestName,
-			guestMessage,
+			guest_name,
+			guest_message,
 		});
 
 		const params = new URLSearchParams({
 			cmd: '_xclick',
 			business: jourj_gift_custom_funding_ajax.paypal_email,
 			item_number: giftId,
-			item_name: `Don de ${guestName}`,
+			item_name: `Don de ${guest_name}`,
 			custom: customData,
 			amount: amount,
 			currency_code: 'EUR',
