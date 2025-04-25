@@ -66,6 +66,7 @@ class JourJ_IPN_Handler
         error_log('ici 1');
 
         # Parse data after validation
+        $post_data = [];
         parse_str($raw_post, $post_data);
 
         if ($post_data['payment_status'] !== 'Completed') {
@@ -87,6 +88,7 @@ class JourJ_IPN_Handler
         error_log("[JourJ Gifts] Payment received for $gift_title – Amount: $amount EUR");
 
         # Save guest message if present
+
         $custom_raw = $post_data['custom'] ?? '';
         $custom_data = json_decode($custom_raw, true);
 
