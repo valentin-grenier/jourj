@@ -233,10 +233,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		 */
 		modal.classList.add('active');
 		overlay.classList.add('active');
+		document.body.style.overflow = 'hidden';
 
 		const closeButton = modal.querySelector('.jo-block-gift-modal__close');
 		closeButton.addEventListener('click', closeGiftModal);
 		overlay.addEventListener('click', closeGiftModal);
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') {
+				closeGiftModal();
+				document.removeEventListener('keydown', closeGiftModal);
+			}
+		});
 	}
 
 	/**
@@ -248,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		modals.forEach((modal) => modal.classList.remove('active'));
 		overlay.classList.remove('active');
+		document.body.style.overflow = 'auto';
 	}
 
 	/**
