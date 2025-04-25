@@ -21,6 +21,10 @@ class JourJ_Pages
                 'title' => __('Merci pour votre participation', 'jourj-gifts'),
                 'content' => '[jourj_gifts_thank_you]',
             ],
+            'annulation-reservation' => [
+                'title' => __('Annulation de la réservation', 'jourj-gifts'),
+                'content' => '[jourj_gifts_cancel]',
+            ],
         ];
 
         foreach ($pages as $slug => $page) {

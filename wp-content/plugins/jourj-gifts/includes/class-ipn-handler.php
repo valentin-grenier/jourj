@@ -63,8 +63,6 @@ class JourJ_IPN_Handler
             error_log('[JourJ Gifts] IPN verified: ' . $body);
         }
 
-        error_log('ici 1');
-
         # Parse data after validation
         $post_data = [];
         parse_str($raw_post, $post_data);

@@ -99,7 +99,7 @@ class Jourj_Gift_Ajax
         }
 
         # Else, update the gift post meta to reserve it and send a success response
-        //update_post_meta($gift_id, '_jourj_reserved', 1);
+        update_post_meta($gift_id, '_jourj_reserved', 1);
         update_post_meta($gift_id, '_jourj_reserved_by_name', $reserved_by_name);
         update_post_meta($gift_id, '_jourj_reserved_by_email', $reserved_by_email);
 
@@ -123,49 +123,24 @@ class Jourj_Gift_Ajax
 
         update_post_meta($gift_id, '_jourj_cancellation_link', $cancellation_link);
 
-        # Send the cancellation email to the user
+        # Send the confirmation emails
         $user_email = sanitize_email($_POST['reserved_by_email']) ?? '';
 
-        if (!empty($user_email)) {
-            $this->send_reservation_confirmation_email($gift_id, $user_email, "guest");
-            $this->send_reservation_confirmation_email($gift_id, $user_email, "admin");
+        if (empty($user_email)) {
+            error_log("[JourJ Gifts - AJAX] Invalid email address provided for reservation confirmation.");
+            wp_send_json_error(__('Invalid email address.', 'jourj-gifts'), 400);
         }
 
-        # Send the success response
+        # Send the reservation confirmation email to the user
+        $emails_users = new JourJ_Emails_Users();
+        $emails_users->send_reservation_confirmation_email($user_email, $cancellation_link, $gift_id);
+
+        # Send the reservation confirmation email to the admins
+        $emails_admins = new JourJ_Emails_Admins();
+        $emails_admins->send_reservation_confirmation_email($user_email, $cancellation_link, $gift_id, $guest_message);
+
+        # Send confirmation response
         wp_send_json_success(['message' => 'Cadeau réservé avec succès']);
-    }
-
-    # Send an email to the user with the cancellation link
-    public function send_reservation_confirmation_email($gift_id, $user_email, $receiver = "admin")
-    {
-        # Send the confirmation email to the admin or the user
-        if ($receiver === "admin") {
-            $user_email = $_ENV['PAYPAL_EMAIL'] ?? get_option('admin_email');
-        }
-
-        error_log("Sending email to: $user_email"); // Debugging line
-
-        # Create the email content
-        if ($receiver === "admin") {
-            $subject = __('Nouvelle réservation de cadeau - Site web', 'jourj-gifts');
-        } else {
-            $subject = __('Confirmation de réservation - Cadeau Rébecca et Aurélien', 'jourj-gifts');
-        }
-
-
-        ob_start();
-        if ($receiver === "admin") {
-            include plugin_dir_path(__FILE__) . './partials/email-reservation-admin.php';
-        } else {
-            include plugin_dir_path(__FILE__) . './partials/email-reservation-guest.php';
-        }
-
-        $message = ob_get_clean();
-
-        # Set the email headers to send HTML email
-        $headers = ['Content-Type: text/html; charset=UTF-8'];
-
-        wp_mail($user_email, $subject, $message, $headers);
     }
 
     # Create cancellation link for the gift
@@ -179,7 +154,7 @@ class Jourj_Gift_Ajax
                 'token'  => $token,
                 'gift_id' => $gift_id,
             ],
-            home_url('/')
+            home_url('/annulation-reservation')
         );
     }
 }

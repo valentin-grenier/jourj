@@ -60,6 +60,8 @@ function jourj_gifts_init()
     new Jourj_Gift_Ajax();
     new JourJ_IPN_Handler();
     new JourJ_Pages();
+    new jourJ_Emails_Users();
+    new jourJ_Emails_Admins();
 }
 
 add_action('plugins_loaded', 'jourj_gifts_init');
