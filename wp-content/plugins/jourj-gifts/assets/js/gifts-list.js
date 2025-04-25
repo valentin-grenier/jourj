@@ -148,8 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 
 			// == Get guest name value and trim it
-			const guestNameElement = modal.querySelector('.jo-block-gift-modal__form input[name="guest_name"]');
-			let guestName = guestNameElement.value.trim();
+			const guestNameElement = modal.querySelector('.jo-block-gift-modal__form input[name="user-name"]');
+			let guestName = guestNameElement.value;
 
 			guestNameElement.addEventListener('input', () => {
 				guestName = guestNameElement.value.trim();
@@ -263,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			business: jourj_gift_ajax.paypal_email,
 			item_number: giftId,
 			item_name: `Participation pour ${giftTitle}`,
-			message: message ?? '',
 			amount: amount,
 			currency_code: 'EUR',
 			custom: customData,

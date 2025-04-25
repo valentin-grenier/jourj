@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		redirectToPaypal({
 			giftId: giftId.value,
 			amount: parseInt(amount.value, 10),
-			guestName: guestName.value,
-			guestMessage: guestMessage.value,
+			guest_name: guestName.value,
+			guest_message: guestMessage.value,
 		});
 	});
 
