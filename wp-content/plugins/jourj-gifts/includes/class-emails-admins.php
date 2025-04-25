@@ -11,7 +11,10 @@ class JourJ_Emails_Admins
    # Create email template for reservation confirmation
    public function send_email($to, $subject, $content)
    {
-      $headers = ['Content-Type: text/html; charset=UTF-8'];
+      $headers = [
+         'Content-Type: text/html; charset=UTF-8',
+         'From: Rébecca et Aurélien <no-reply@notremariage-rebec-aure.fr>'
+      ];
 
       wp_mail($to, $subject, $content, $headers);
    }
