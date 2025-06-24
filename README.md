@@ -1,4 +1,4 @@
-# Jour J - Système de cagnotte en ligne pour un mariage
+# Jour J - Un système de cagnotte en ligne pour un mariage
 
 Ce projet WordPress a pour objectif de faciliter la collecte de fonds pour un mariage en permettant aux mariés de présenter leurs idées de cadeaux et aux invités d’y participer facilement. Grâce à un thème sur-mesure et à plusieurs plugins dédiés, la plateforme offre une gestion complète des cadeaux (création, suivi des montants), des paiements sécurisés via PayPal et des notifications automatisées aux mariés.
 
