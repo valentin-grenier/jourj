@@ -62,7 +62,6 @@
             step="0.01"
             name="jourj_funded"
             id="jourj_funded"
-            disabled
             value="<?php echo esc_attr($funded); ?>"
             style="width: 100%; max-width: 300px;">
     </p>
