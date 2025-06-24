@@ -26,3 +26,4 @@ jobs:
                       **/.git*/**
                       **/node_modules/**
                       **/.vscode/**
+                      .ftp-deploy-sync-state.json
