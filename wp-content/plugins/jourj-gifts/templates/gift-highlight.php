@@ -36,6 +36,9 @@ $funded_percentage = number_format($funded_percentage, 0, '.', ''); # Format to 
 # Icons
 $icon_plane = plugins_url('assets/img/icon-airplane.png', __DIR__);
 $icon_island = plugins_url('assets/img/icon-island.png', __DIR__);
+
+# Payment URL
+$gift_payment_url_paypal = isset($_ENV['PAYPAL_URL']) ? $_ENV['PAYPAL_URL'] : null;
 ?>
 
 <div class="jo-block-gift-highlight" data-gift-id="<?php echo esc_attr($gift_id); ?>">
@@ -51,7 +54,9 @@ $icon_island = plugins_url('assets/img/icon-island.png', __DIR__);
                 <?php echo __('Nous estimons le montant du voyage à', 'jourj-gifts') . ' ' . esc_html($price_formatted) . '€.'; ?>
             </div>
 
-            <button class="wp-block-button__link"><?php _e('Participer à notre voyage de noces', 'jourj-gifts'); ?></button>
+            <a class="wp-block-button__link" href="<?php echo esc_url($gift_payment_url_paypal); ?>" target="_blank" rel="noopener noreferrer">
+                <?php _e('Participer à notre voyage de noces', 'jourj-gifts'); ?>
+            </a>
         </div>
 
         <div class="jo-block-gift-highlight__overlay"></div>

@@ -1,8 +1,9 @@
-@charset "UTF-8";
 .jo-block-gifts-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
   padding-top: 2rem;
   margin-top: 2rem;
   border-top: solid 1px var(--wp--preset--color--tertiary-light);
@@ -11,6 +12,7 @@
   background: var(--wp--preset--color--white);
   padding: 0.5rem;
   border-radius: 0.75rem;
+  flex: 1;
 }
 .jo-block-gifts-list__item--image {
   position: relative;
@@ -54,6 +56,7 @@
   color: var(--wp--preset--color--secondary);
   font-size: 0.875rem;
   font-weight: 600;
+  text-align: center;
 }
 .jo-block-gifts-list__item--buttons {
   display: flex;
@@ -62,205 +65,23 @@
   gap: 1rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
 }
-.jo-block-gifts-list__item--buttons button {
+.jo-block-gifts-list__item--buttons a.wp-block-button__link {
   font-size: 0.875rem;
   padding: 0.75rem 1rem;
   width: fit-content;
   border-radius: 0.4rem;
   cursor: pointer;
-}
-.jo-block-gifts-list__item--buttons button.secondary {
-  background: var(--wp--preset--color--secondary-light);
-  color: var(--wp--preset--color--primary);
-}
-
-.jo-block-gift-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--wp--preset--color--white);
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 800px;
-  width: 100%;
-  opacity: 0;
-  visibility: hidden;
-  z-index: -1;
-  transition: all 600ms;
-}
-.jo-block-gift-modal.active {
-  opacity: 1;
-  visibility: visible;
-  z-index: 9999;
-}
-.jo-block-gift-modal__image {
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-.jo-block-gift-modal__details--title {
-  text-transform: none;
-  letter-spacing: -1px;
-  font-size: 1.25rem;
-  line-height: normal;
-  font-family: var(--wp--preset--font-family--body);
-}
-.jo-block-gift-modal__details--title span.gift-name {
-  color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-modal__details--price {
-  margin-bottom: 1rem;
-}
-.jo-block-gift-modal__details--price span.gift-price {
-  color: var(--wp--preset--color--primary);
-  font-weight: 700;
-}
-.jo-block-gift-modal__details--amounts {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.jo-block-gift-modal__details--amounts button {
-  text-transform: none;
-  width: 100%;
-  background: var(--wp--preset--color--secondary-light);
-  color: var(--wp--preset--color--primary);
-  font-weight: 700;
-  text-wrap: nowrap;
-  cursor: pointer;
-  transition: all 150ms;
-}
-.jo-block-gift-modal__details--amounts button:hover {
-  transform: scale(0.95);
-}
-.jo-block-gift-modal__details--amounts button.active {
   background: var(--wp--preset--color--primary);
-  color: var(--wp--preset--color--secondary-light);
-  font-weight: 700;
+  color: var(--wp--preset--color--white);
 }
-.jo-block-gift-modal__details--custom-amount {
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: all 400ms;
-}
-.jo-block-gift-modal__details--custom-amount.active {
-  opacity: 1;
-}
-.jo-block-gift-modal__payment-infos {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-}
-.jo-block-gift-modal__payment-infos--title {
-  line-height: normal;
-  margin-bottom: 0.25rem;
-  font-weight: 700;
-}
-.jo-block-gift-modal__payment-infos--title strong {
-  color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-modal__payment-infos--subtitle {
-  line-height: 1.25rem;
-  font-size: 0.875rem;
-}
-.jo-block-gift-modal label {
-  font-size: 0.875rem;
-}
-.jo-block-gift-modal input:not([type=submit]),
-.jo-block-gift-modal textarea {
-  display: block;
-  border: 1px solid var(--wp--preset--color--primary-light);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-family: var(--wp--preset--font-family--body);
-  transition: all 200ms;
-  outline-color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-modal input:not([type=submit]):active, .jo-block-gift-modal input:not([type=submit]):focus,
-.jo-block-gift-modal textarea:active,
-.jo-block-gift-modal textarea:focus {
-  outline-color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-modal input:not([type=submit]):not(:last-of-type),
-.jo-block-gift-modal textarea:not(:last-of-type) {
-  margin-bottom: 1rem;
-}
-.jo-block-gift-modal input[type=submit] {
-  height: fit-content;
-  text-transform: none;
-}
-.jo-block-gift-modal textarea {
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-.jo-block-gift-modal__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  border: none;
-  border-radius: 50%;
-  background: var(--wp--preset--color--secondary-light);
-  display: flex;
-  padding: 0.75rem;
-  cursor: pointer;
-  transition: all 200ms;
-}
-.jo-block-gift-modal__close:hover {
-  background: var(--wp--preset--color--tertiary-light);
-}
-.jo-block-gift-modal__close img {
-  width: 1rem;
-  height: 1rem;
-}
-.jo-block-gift-modal__overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  z-index: -10;
-  transition: all 600ms;
-}
-.jo-block-gift-modal__overlay.active {
-  opacity: 1;
-  visibility: visible;
-  z-index: 9998;
-}
-@media screen and (max-width: 550px) {
-  .jo-block-gift-modal {
-    top: unset;
-    bottom: -5%;
-    transform: translate(-50%, 0);
-    height: 100%;
-    max-height: 90%;
-    overflow: scroll;
-    opacity: 0;
-    border-radius: 1rem 1rem 0 0;
-    transition: all 600ms;
+@media screen and (max-width: 768px) {
+  .jo-block-gifts-list__item {
+    min-width: calc(50% - 0.5rem);
   }
-  .jo-block-gift-modal.active {
-    bottom: 0;
-  }
-  .jo-block-gift-modal__details--amounts {
-    flex-wrap: wrap;
-  }
-  .jo-block-gift-modal__details--amounts button {
-    flex: 1;
-    width: fit-content;
+}
+@media screen and (max-width: 480px) {
+  .jo-block-gifts-list__item {
+    min-width: 100%;
   }
 }
 
@@ -292,89 +113,10 @@
   color: var(--wp--preset--color--white);
   display: block;
   margin: 1.5rem auto 0;
+  width: fit-content;
 }
 .jo-block-gift-custom-funding__button:hover {
   opacity: 0.8;
-}
-.jo-block-gift-custom-funding__form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  background: var(--wp--preset--color--white);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: var(--wp--preset--shadow--md);
-  min-width: 400px;
-  width: 500px;
-  overflow: hidden;
-  margin: 2rem auto 0;
-  transition: all 400ms;
-}
-.jo-block-gift-custom-funding__form.hidden {
-  opacity: 0;
-  padding: 0 1.5rem;
-  margin-top: 0rem;
-  height: 0;
-}
-.jo-block-gift-custom-funding__form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding-right: 2rem;
-  line-height: normal;
-  font-size: 0.875rem;
-}
-.jo-block-gift-custom-funding__form label span {
-  line-height: normal;
-  font-size: 1rem;
-  font-weight: bold;
-}
-.jo-block-gift-custom-funding__form input:not([type=submit]),
-.jo-block-gift-custom-funding__form textarea {
-  display: block;
-  border: 1px solid var(--wp--preset--color--primary-light);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-family: var(--wp--preset--font-family--body);
-  transition: all 200ms;
-  outline-color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-custom-funding__form input:not([type=submit]):active, .jo-block-gift-custom-funding__form input:not([type=submit]):focus,
-.jo-block-gift-custom-funding__form textarea:active,
-.jo-block-gift-custom-funding__form textarea:focus {
-  outline-color: var(--wp--preset--color--secondary);
-}
-.jo-block-gift-custom-funding__form input[type=submit] {
-  background-color: var(--wp--preset--color--primary);
-  border-radius: 0.5rem;
-  border-width: 0;
-  color: var(--wp--preset--color--white);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: normal;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 200ms;
-}
-.jo-block-gift-custom-funding__form input[type=submit]:hover {
-  opacity: 0.8;
-}
-.jo-block-gift-custom-funding__form--input {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.jo-block-gift-custom-funding__form--input.number:after {
-  content: "€";
-  position: absolute;
-  bottom: 0;
-  right: 1rem;
 }
 
 .jo-block-gift-highlight__main {
@@ -495,63 +237,5 @@
   .jo-block-gift-highlight__bottom {
     flex-direction: column-reverse;
     gap: 2rem;
-  }
-}
-
-.jo-page-thank-you {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  padding: 4rem 0;
-  text-align: center;
-}
-.jo-page-thank-you__text h1 {
-  margin-bottom: 0.5rem;
-}
-.jo-page-thank-you .wp-block-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.jo-page-thank-you .wp-block-buttons .wp-block-button.is-style-button-secondary .wp-block-button__link {
-  background: var(--wp--preset--color--tertiary-light);
-  color: var(--wp--preset--color--primary);
-}
-@media screen and (max-width: 550px) {
-  .jo-page-thank-you .wp-block-buttons {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
-
-.jo-page-cancel-reservation {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  padding: 4rem 0;
-  text-align: center;
-}
-.jo-page-cancel-reservation__text h1 {
-  margin-bottom: 0.5rem;
-}
-.jo-page-cancel-reservation .wp-block-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.jo-page-cancel-reservation .wp-block-buttons .wp-block-button.is-style-button-secondary .wp-block-button__link {
-  background: var(--wp--preset--color--tertiary-light);
-  color: var(--wp--preset--color--primary);
-}
-@media screen and (max-width: 550px) {
-  .jo-page-cancel-reservation .wp-block-buttons {
-    flex-direction: column;
-    gap: 1.5rem;
   }
 }

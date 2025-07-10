@@ -19,23 +19,17 @@ $gifts = new WP_Query(array(
     ]
 ));
 
+$gift_payment_url_paypal = isset($_ENV['PAYPAL_URL']) ? $_ENV['PAYPAL_URL'] : null;
+
 ?>
 
 <div class="jo-block-gifts-list">
     <?php if ($gifts->have_posts()): ?>
         <?php while ($gifts->have_posts()): $gifts->the_post(); ?>
-            <?php
-            # Check if the post is reserved
-            $is_reserved = (bool) get_post_meta(get_the_ID(), '_jourj_reserved', true);
-            ?>
             <div class="jo-block-gifts-list__item" data-gift-id="<?php echo get_the_ID(); ?>">
                 <div class="jo-block-gifts-list__item--image">
                     <?php if (has_post_thumbnail()): ?>
                         <?php the_post_thumbnail('medium'); ?>
-
-                        <?php if ($is_reserved): ?>
-                            <span class="label-reserved"><?php _e('Réservé', 'jourj-gift'); ?></span>
-                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
 
@@ -44,15 +38,19 @@ $gifts = new WP_Query(array(
                     <span class="title"><?php echo get_the_title(); ?></span>
                 </div>
 
-                <?php if (!$is_reserved): ?>
+                <?php if (!empty($gift_payment_url_paypal)): ?>
                     <div class="jo-block-gifts-list__item--buttons">
-                        <button class="wp-block-button__link"><?php _e('Participer', 'jourj-gifts'); ?></button>
-                        <button class="wp-block-button__link secondary"><?php _e('Réserver', 'jourj-gifts'); ?></button>
+                        <a
+                            class="wp-block-button__link"
+                            href="<?php echo esc_url($gift_payment_url_paypal); ?>"
+                            target="_blank" rel="noopener noreferrer">
+                            <?php _e('Participer', 'jourj-gifts'); ?>
+                        </a>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <p><?php _e('No gifts found.', 'jourj-gifts'); ?></p>
+        <p><?php _e('Les cadeaux ne sont pas encore disponibles. Patience ...', 'jourj-gifts'); ?></p>
     <?php endif; ?>
 </div>

@@ -23,21 +23,6 @@ class JourJ_Init
 
         # CSS
         wp_enqueue_style('jourj-gifts-styles', $plugin_root_url . 'assets/css/front-end.css', array(), '1.0.0', 'all');
-
-        # JS
-        wp_enqueue_script('jourj-gifts-list', $plugin_root_url . 'assets/js/gifts-list.js', array(), '1.0.0', true);
-        wp_localize_script('jourj-gifts-list', 'jourj_gift_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('jourj_gift_nonce'),
-            'paypal_email' => $_ENV['PAYPAL_EMAIL'] ?? null
-        ));
-
-        wp_enqueue_script('jourj-gifts-custom-funding', $plugin_root_url . 'assets/js/gift-custom-funding.js', array(), '1.0.0', true);
-        wp_localize_script('jourj-gifts-custom-funding', 'jourj_gift_custom_funding_ajax', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('jourj_gift_custom_funding_nonce'),
-            'paypal_email' => $_ENV['PAYPAL_EMAIL'] ?? null
-        ));
     }
 
     # Load admin scripts

@@ -11,15 +11,15 @@ class JourJ_Custom_Fields
     public function __construct()
     {
         # Register meta boxes
-        add_action('add_meta_boxes', [$this, 'gift_custom_fields']);
-        add_action('add_meta_boxes', [$this, 'guests_messages']);
+        add_action('add_meta_boxes', [$this, 'gift_details_meta_box']);
+        add_action('add_meta_boxes', [$this, 'guests_messages_meta_box']);
 
         # Save meta box data
         add_action('save_post_jourj_gift', [$this, 'save_gift_custom_fields']);
     }
 
-    # Create the meta box
-    public function gift_custom_fields()
+    # Create details meta box
+    public function gift_details_meta_box()
     {
         global $post;
 
@@ -40,7 +40,7 @@ class JourJ_Custom_Fields
     }
 
     # Guest messages meta box
-    public function guests_messages()
+    public function guests_messages_meta_box()
     {
         add_meta_box(
             'jourj_guest_messages',                         # Unique ID for the meta box
@@ -61,22 +61,14 @@ class JourJ_Custom_Fields
         # Get current meta values
         $total_amount = get_post_meta($post->ID, '_jourj_total_amount', true);
         $gift_description = get_post_meta($post->ID, '_jourj_gift_description', true);
-        $reserved = get_post_meta($post->ID, '_jourj_reserved', true);
         $funded = get_post_meta($post->ID, '_jourj_funded', true);
-        $reserved_by_name = get_post_meta($post->ID, '_jourj_reserved_by_name', true);
-        $reserved_by_email = get_post_meta($post->ID, '_jourj_reserved_by_email', true);
         $is_featured = get_post_meta($post->ID, '_jourj_is_highlighted', true);
-        $cancellation_link = get_post_meta($post->ID, '_jourj_cancellation_link', true);
 
         # Default or cast
         $total_amount = $total_amount ?: '';
         $gift_description = $gift_description ?: '';
-        $reserved = (int) $reserved;
         $funded = (float) $funded;
-        $reserved_by_name = $reserved_by_name ?: '';
-        $reserved_by_email = $reserved_by_email ?: '';
         $is_featured = (int) $is_featured;
-        $cancellation_link = $cancellation_link ?: '';
 
         require plugin_dir_path(__FILE__) . 'partials/metabox-gift-fields.php';
     }
@@ -108,12 +100,8 @@ class JourJ_Custom_Fields
         $fields = [
             '_jourj_total_amount' => filter_input(INPUT_POST, 'jourj_total_amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
             '_jourj_gift_description' => sanitize_textarea_field($_POST['jourj_gift_description'] ?? ''),
-            '_jourj_reserved' => !empty($_POST['jourj_reserved']) ? 1 : 0,
             '_jourj_funded' => filter_input(INPUT_POST, 'jourj_funded', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-            '_jourj_reserved_by_name' => sanitize_text_field($_POST['jourj_reserved_by_name'] ?? ''),
-            '_jourj_reserved_by_email' => sanitize_email($_POST['jourj_reserved_by_email'] ?? ''),
             '_jourj_is_highlighted' => !empty($_POST['jourj_is_featured']) ? 1 : 0,
-            '_jourj_cancellation_link' => sanitize_url($_POST['jourj_cancellation_link'] ?? ''),
         ];
 
         foreach ($fields as $meta_key => $value) {
