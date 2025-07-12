@@ -13,7 +13,6 @@ class JourJ_Shortcodes
         add_shortcode('jourj_gifts_list', [$this, 'render_gift_list']);
         add_shortcode('jourj_gifts_thank_you', [$this, 'render_thank_you_page']);
         add_shortcode('jourj_gifts_cancel', [$this, 'render_cancel_page']);
-        add_action('wp_footer', [$this, 'render_overlay'], 100);
     }
 
     # Render the gift list shortcode and the modal
